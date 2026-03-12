@@ -1,0 +1,24 @@
+<div id="login-component">
+    <h2>Se connecter</h2>
+    <form #loginForm (submit)="$event.preventDefault(); login(loginUsername.value, loginPassword.value)">
+        <label for="loginUsername">Identifiant</label>
+        <input #loginUsername id="loginUsername" name="loginUsername" type="text" />
+
+        <label for="loginPassword">Mot de passe</label>
+        <input #loginPassword id="loginPassword" name="loginPassword" type="password" />
+
+        <button type="submit">Se connecter</button>
+    </form>
+
+
+<!--     <h2>Créer un compte</h2>
+    <form #registerForm (submit)="$event.preventDefault(); register(registerUsername.value, registerPassword.value)">
+        <label for="registerUsername">Identifiant</label>
+        <input #registerUsername id="registerUsername" name="registerUsername" type="text" />
+
+        <label for="registerPassword">Mot de passe</label>
+        <input #registerPassword id="registerPassword" name="registerPassword" type="password" />
+
+        <button type="submit">Créer un compte</button>
+    </form> -->
+</div>
