@@ -1,31 +1,64 @@
 :host {
+    display: block;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
+    z-index: 1000;
+}
 
+.sidebar-shell {
     width: 240px;
-    padding: 10px;
+    height: 100%;
+    transition: width 180ms ease;
+}
 
-    display: flex;
-    flex-direction: column;
+.sidebar-shell.collapsed {
+    width: 78px;
+}
 
+.sidebar-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    border-right: none;
     background-color: var(--color-primary);
     color: var(--color-white);
+    border-radius: 0;
+}
+
+.sidebar-content {
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 #sidebar-head {
-    display: flex;
-    flex-direction: row;
     align-items: center;
+    display: flex;
     gap: 15px;
 }
 
-#sidebar-head span {
+#sidebar-logo-button {
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    margin: 4px 0;
+    padding: 0;
+}
+
+#sidebar-logo-button span {
+    align-items: center;
+    border-radius: 10px;
+    display: inline-flex;
     width: 36px;
     height: 36px;
     background-color: var(--color-secondary);
-    border-radius: 10px;
+    justify-content: center;
+    font-size: 0;
 }
 
 #sidebar-head h2 {
@@ -49,16 +82,19 @@
     font-size: 16px;
 }
 
-#sidebar-nav-title {
+.sidebar-nav-title {
     color: var(--color-text-discreet);
+    line-height: 32px;
+    padding-left: 10px;
 }
 
-#sidebar-nav li, #sidebar-foot {
+.sidebar-nav-element,
+#sidebar-foot {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    line-height: 32px;
+    height: 32px;
     border-radius: 10px;
     padding-left: 10px;
     cursor: pointer;
@@ -66,6 +102,14 @@
 
 .sidebar-nav-element:hover, #sidebar-foot:hover {
     background-color: #004679;
+}
+
+.sidebar-nav-element:focus-visible,
+#sidebar-foot:focus-visible,
+#sidebar-logo-button:focus-visible {
+    background-color: #004679;
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
 }
 
 .sidebar-nav-element.active {
@@ -79,10 +123,32 @@
     background-color: #fff;
 }
 
+.nav-material-icon {
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 18px;
+    color: #fff;
+}
+
 #sidebar-foot {
     margin-top: auto;
 }
 
-#sidebar-foot span {
-    display: inline-block;
+.hidden {
+    display: none;
+}
+
+.sidebar-shell.collapsed #sidebar-head {
+    justify-content: center;
+}
+
+.sidebar-shell.collapsed .sidebar-nav-element,
+.sidebar-shell.collapsed #sidebar-foot {
+    justify-content: center;
+    padding-left: 0;
+}
+
+.sidebar-placeholder-content {
+    display: none;
 }

@@ -1,6 +1,5 @@
 :host {
     position: relative;
     display: block;
-    
-    margin-left: 240px;
+    transition: margin-left 180ms ease;
 }

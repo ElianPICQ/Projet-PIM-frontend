@@ -1,18 +1,89 @@
-<div id="sidebar-head">
-    <span>Logo</span>
-    <div>
-        <h2>RetailFlow</h2>
-        <h3>Placeholder</h3>
-    </div>
-</div>
-<ul id="sidebar-nav">
-    <li id="sidebar-nav-title">NAVIGATION</li>
-    <li class="sidebar-nav-element" [class.active]="activePage === 'dashboard'" (click)="navigateTo('dashboard')"><span class="nav-icon"></span>Dashboard</li>
-    <li class="sidebar-nav-element" [class.active]="activePage === 'produits'" (click)="navigateTo('produits')"><span class="nav-icon"></span>Produits</li>
-    <li class="sidebar-nav-element" [class.active]="activePage === 'stocks'" (click)="navigateTo('stocks')"><span class="nav-icon"></span>Stocks</li>
-    <li class="sidebar-nav-element" [class.active]="activePage === 'historique'" (click)="navigateTo('historique')"><span class="nav-icon"></span>Historique</li>
-    <li class="sidebar-nav-element" [class.active]="activePage === 'profil'" (click)="navigateTo('profil')"><span class="nav-icon"></span>Profil</li>
-</ul>
-<div id="sidebar-foot">
-    <span class="nav-icon"></span><span>Déconnexion</span>
-</div>
+<mat-sidenav-container class="sidebar-shell" [class.collapsed]="isCollapsed">
+    <mat-sidenav class="sidebar-panel" mode="side" [opened]="true" [disableClose]="true">
+        <div class="sidebar-content">
+            <div id="sidebar-head">
+                <button
+                    id="sidebar-logo-button"
+                    type="button"
+                    (click)="toggleSidebar()"
+                    [attr.aria-label]="isCollapsed ? 'Open sidebar' : 'Close sidebar'"
+                >
+                    <span><mat-icon class="nav-material-icon" aria-hidden="true">{{ activePageIcon }}</mat-icon></span>
+                </button>
+                <div id="sidebar-head-text" [class.hidden]="isCollapsed">
+                    <h2>RetailFlow</h2>
+                    <h3>Placeholder</h3>
+                </div>
+            </div>
+            <ul id="sidebar-nav">
+                <li class="sidebar-nav-title" [class.hidden]="isCollapsed">NAVIGATION</li>
+                <li class="sidebar-nav-title" [class.hidden]="!isCollapsed">NAV</li>
+                <li
+                    class="sidebar-nav-element"
+                    [class.active]="activePage === 'dashboard'"
+                    [attr.aria-current]="activePage === 'dashboard' ? 'page' : null"
+                    role="link"
+                    tabindex="0"
+                    (click)="navigateTo('dashboard')"
+                    (keydown)="onNavKeydown($event, 'dashboard')"
+                >
+                    <mat-icon class="nav-material-icon" aria-hidden="true">dashboard</mat-icon>
+                    <span class="nav-label" [class.hidden]="isCollapsed">Dashboard</span>
+                </li>
+                <li
+                    class="sidebar-nav-element"
+                    [class.active]="activePage === 'produits'"
+                    [attr.aria-current]="activePage === 'produits' ? 'page' : null"
+                    role="link"
+                    tabindex="0"
+                    (click)="navigateTo('produits')"
+                    (keydown)="onNavKeydown($event, 'produits')"
+                >
+                    <mat-icon class="nav-material-icon" aria-hidden="true">inventory_2</mat-icon>
+                    <span class="nav-label" [class.hidden]="isCollapsed">Produits</span>
+                </li>
+                <li
+                    class="sidebar-nav-element"
+                    [class.active]="activePage === 'stocks'"
+                    [attr.aria-current]="activePage === 'stocks' ? 'page' : null"
+                    role="link"
+                    tabindex="0"
+                    (click)="navigateTo('stocks')"
+                    (keydown)="onNavKeydown($event, 'stocks')"
+                >
+                    <mat-icon class="nav-material-icon" aria-hidden="true">warehouse</mat-icon>
+                    <span class="nav-label" [class.hidden]="isCollapsed">Stocks</span>
+                </li>
+                <li
+                    class="sidebar-nav-element"
+                    [class.active]="activePage === 'historique'"
+                    [attr.aria-current]="activePage === 'historique' ? 'page' : null"
+                    role="link"
+                    tabindex="0"
+                    (click)="navigateTo('historique')"
+                    (keydown)="onNavKeydown($event, 'historique')"
+                >
+                    <mat-icon class="nav-material-icon" aria-hidden="true">history</mat-icon>
+                    <span class="nav-label" [class.hidden]="isCollapsed">Historique</span>
+                </li>
+                <li
+                    class="sidebar-nav-element"
+                    [class.active]="activePage === 'profil'"
+                    [attr.aria-current]="activePage === 'profil' ? 'page' : null"
+                    role="link"
+                    tabindex="0"
+                    (click)="navigateTo('profil')"
+                    (keydown)="onNavKeydown($event, 'profil')"
+                >
+                    <mat-icon class="nav-material-icon" aria-hidden="true">person</mat-icon>
+                    <span class="nav-label" [class.hidden]="isCollapsed">Profil</span>
+                </li>
+            </ul>
+            <div id="sidebar-foot" tabindex="0" role="button">
+                <mat-icon class="nav-material-icon" aria-hidden="true">logout</mat-icon>
+                <span class="nav-label" [class.hidden]="isCollapsed">Deconnexion</span>
+            </div>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidebar-placeholder-content"></mat-sidenav-content>
+</mat-sidenav-container>
