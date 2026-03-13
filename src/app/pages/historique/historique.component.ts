@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-historique',
   imports: [SidebarComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  templateUrl: './historique.component.html',
+  styleUrl: './historique.component.css'
 })
-export class DashboardComponent {
+export class HistoriqueComponent {
 
 }

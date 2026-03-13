@@ -1,1 +1,18 @@
-<p>sidebar works!</p>
+<div id="sidebar-head">
+    <span>Logo</span>
+    <div>
+        <h2>RetailFlow</h2>
+        <h3>Placeholder</h3>
+    </div>
+</div>
+<ul id="sidebar-nav">
+    <li id="sidebar-nav-title">NAVIGATION</li>
+    <li class="sidebar-nav-element" [class.active]="activePage === 'dashboard'" (click)="navigateTo('dashboard')"><span class="nav-icon"></span>Dashboard</li>
+    <li class="sidebar-nav-element" [class.active]="activePage === 'produits'" (click)="navigateTo('produits')"><span class="nav-icon"></span>Produits</li>
+    <li class="sidebar-nav-element" [class.active]="activePage === 'stocks'" (click)="navigateTo('stocks')"><span class="nav-icon"></span>Stocks</li>
+    <li class="sidebar-nav-element" [class.active]="activePage === 'historique'" (click)="navigateTo('historique')"><span class="nav-icon"></span>Historique</li>
+    <li class="sidebar-nav-element" [class.active]="activePage === 'profil'" (click)="navigateTo('profil')"><span class="nav-icon"></span>Profil</li>
+</ul>
+<div id="sidebar-foot">
+    <span class="nav-icon"></span><span>Déconnexion</span>
+</div>

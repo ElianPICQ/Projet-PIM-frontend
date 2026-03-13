@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --color-white: #f0f0f0;
+    --color-primary: #003051;
+    --color-primary-light: #3F7CAF;
+    --color-secondary: #FC9100;
+    --color-text-discreet: #afafaf;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+html {
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    margin: 0;
+}

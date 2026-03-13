@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-profil',
   imports: [SidebarComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  templateUrl: './profil.component.html',
+  styleUrl: './profil.component.css'
 })
-export class DashboardComponent {
+export class ProfilComponent {
 
 }
