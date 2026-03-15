@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-    --color-white: #f0f0f0;
+    --sidebar-width: 180px;
+    --color-text-white: #f9f9f9;
+    --color-text-darkblue: #003051;
     --color-primary: #003051;
     --color-primary-light: #3F7CAF;
     --color-secondary: #FC9100;
-    --color-text-discreet: #afafaf;
+    --color-grey-discreet: #afafaf;
 }
 
 * {

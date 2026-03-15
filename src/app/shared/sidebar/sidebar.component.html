@@ -8,7 +8,7 @@
                     (click)="toggleSidebar()"
                     [attr.aria-label]="isCollapsed ? 'Open sidebar' : 'Close sidebar'"
                 >
-                    <span><mat-icon class="nav-material-icon" aria-hidden="true">{{ activePageIcon }}</mat-icon></span>
+                    <app-icon-primary [icon]="activePageIcon"></app-icon-primary>
                 </button>
                 <div id="sidebar-head-text" [class.hidden]="isCollapsed">
                     <h2>RetailFlow</h2>
@@ -79,9 +79,9 @@
                     <span class="nav-label" [class.hidden]="isCollapsed">Profil</span>
                 </li>
             </ul>
-            <div id="sidebar-foot" tabindex="0" role="button">
+            <div id="sidebar-foot" tabindex="0" role="button" (click)="logout()">
                 <mat-icon class="nav-material-icon" aria-hidden="true">logout</mat-icon>
-                <span class="nav-label" (click)="logout()" [class.hidden]="isCollapsed">Deconnexion</span>
+                <span class="nav-label" [class.hidden]="isCollapsed">Deconnexion</span>
             </div>
         </div>
     </mat-sidenav>

@@ -1,4 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
+import { SidebarStateService } from 'src/app/core/services/sidebar-state.service';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 
 @Component({
@@ -8,14 +9,10 @@ import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
   styleUrl: './historique.component.css'
 })
 export class HistoriqueComponent {
-  private isSidebarCollapsed = false;
+  constructor(private readonly sidebarStateService: SidebarStateService) {}
 
   @HostBinding('style.margin-left.px')
   get hostMarginLeft(): number {
-    return this.isSidebarCollapsed ? 78 : 240;
-  }
-
-  onSidebarCollapsedChange(isCollapsed: boolean): void {
-    this.isSidebarCollapsed = isCollapsed;
+    return this.sidebarStateService.isCollapsed ? 50 : 180;
   }
 }

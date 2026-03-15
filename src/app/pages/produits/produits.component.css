@@ -1,5 +1,4 @@
 :host {
     position: relative;
     display: block;
-    transition: margin-left 180ms ease;
 }

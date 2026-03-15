@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
+import { IconPrimaryComponent } from 'src/app/shared/icon-primary/icon-primary.component';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [MatIconModule, IconPrimaryComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
