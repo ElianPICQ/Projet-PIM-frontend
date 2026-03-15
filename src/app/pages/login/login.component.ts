@@ -29,8 +29,10 @@ export class LoginComponent
     this.authService.login(this.$username, this.$password).subscribe({
       next: (response) => {
         console.log('Login success', response);
-        if (response.success)
+        if (response.success && 'access' in response && 'refresh' in response) {
+          this.authService.setTokens(response.access, response.refresh);
           this.router.navigate(['/dashboard'])
+        }
       },
       error: (err) => console.error('Login failed', err)
     });

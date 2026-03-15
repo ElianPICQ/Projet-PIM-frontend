@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import {
   MatSidenav,
   MatSidenavContainer,
@@ -6,6 +6,7 @@ import {
 } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -31,7 +32,10 @@ export class SidebarComponent {
     return this.pageIcons[this.activePage] ?? 'dashboard';
   }
 
-  constructor(private readonly router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService
+  ) {}
 
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
@@ -47,5 +51,10 @@ export class SidebarComponent {
       event.preventDefault();
       this.navigateTo(page);
     }
+  }
+
+  logout() {
+    this.authService.clearTokens();
+    this.router.navigate(['/']);
   }
 }

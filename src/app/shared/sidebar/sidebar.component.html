@@ -81,7 +81,7 @@
             </ul>
             <div id="sidebar-foot" tabindex="0" role="button">
                 <mat-icon class="nav-material-icon" aria-hidden="true">logout</mat-icon>
-                <span class="nav-label" [class.hidden]="isCollapsed">Deconnexion</span>
+                <span class="nav-label" (click)="logout()" [class.hidden]="isCollapsed">Deconnexion</span>
             </div>
         </div>
     </mat-sidenav>
