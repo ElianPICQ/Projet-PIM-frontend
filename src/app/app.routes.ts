@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ProduitsComponent } from './pages/produits/produits.component';
+import { ProductsComponent } from './pages/products/products.component';
 import { StocksComponent } from './pages/stocks/stocks.component';
 import { HistoriqueComponent } from './pages/historique/historique.component';
 import { ProfilComponent } from './pages/profil/profil.component';
@@ -19,11 +19,6 @@ export const routes: Routes = [
         canActivate: [protectedRouteGuard],
     },
     {
-        path: 'produits',
-        component: ProduitsComponent,
-        canActivate: [protectedRouteGuard],
-    },
-    {
         path: 'stocks',
         component: StocksComponent,
         canActivate: [protectedRouteGuard],
@@ -37,5 +32,9 @@ export const routes: Routes = [
         path: 'profil',
         component: ProfilComponent,
         canActivate: [protectedRouteGuard],
+    },
+    {
+        path: 'products',
+        component: ProductsComponent,
     },
 ];

@@ -16,7 +16,9 @@ export class LoginComponent
   $username !: string;
   $password !: string;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this
+  }
 
   ngOnInit()
   {
