@@ -8,7 +8,7 @@ import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-profil',
-  imports: [HeaderComponent, SidebarComponent,IconPrimaryComponent, InputFieldComponent],
+  imports: [HeaderComponent, SidebarComponent, InputFieldComponent, IconPrimaryComponent],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.css'
 })

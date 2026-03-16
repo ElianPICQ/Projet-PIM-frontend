@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
-import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { IconPrimaryComponent } from 'src/app/shared/icon-primary/icon-primary.component';
 import { InputFieldComponent } from 'src/app/shared/input-field/input-field.component';
 
 @Component({
   selector: 'app-login',
-  imports: [MatIconModule, IconPrimaryComponent, InputFieldComponent],
+  imports: [InputFieldComponent, IconPrimaryComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
