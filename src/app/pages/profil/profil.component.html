@@ -14,7 +14,7 @@
 <div class="default-container change-password">
     <h3><app-icon-primary icon="lock" state="tertiary"></app-icon-primary>Modifier le mot de passe</h3>
 
-    <form (submit)="$event.preventDefault(); changePassword()">
+    <form (submit)="$event.preventDefault(); changePassword(oldPasswordField.value, newPasswordField.value, confirmPasswordField.value)">
         <app-input-field
             #oldPasswordField="appInputField"
             label="Mot de passe actuel"

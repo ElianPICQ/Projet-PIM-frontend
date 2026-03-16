@@ -30,6 +30,7 @@ interface RefreshResponse {
 export class AuthService {
 
   private readonly loginUrl = environment.API_URL + 'authentication/login/';
+  private readonly changepasswordUrl = environment.API_URL + 'authentication/changepassword/';
   private readonly refreshUrl = environment.API_URL + 'api/token/refresh/';
   private readonly accessKey = 'access';
   private readonly refreshKey = 'refresh';
@@ -38,6 +39,10 @@ export class AuthService {
 
   login(username: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.loginUrl, { username, password });
+  }
+
+  changepassword(oldpassword: string, newpassword: string, confirmpassword: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.changepasswordUrl, { oldpassword, newpassword, confirmpassword });
   }
 
   setTokens(access: string, refresh: string): void {
