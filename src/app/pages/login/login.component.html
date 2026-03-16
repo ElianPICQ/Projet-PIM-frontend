@@ -1,18 +1,26 @@
-<div id="login-container">
+<div id="login-container" class="default-container">
     <app-icon-primary icon="warehouse"></app-icon-primary>
     <h1>RetailFlow</h1>
     <h2>Gérez vos stocks efficacement</h2>
-    <form #loginForm (submit)="$event.preventDefault(); login(loginUsername.value, loginPassword.value)">
-        <div class="form-input">
-            <label for="loginUsername">Nom d'utilisateur</label>
-            <input #loginUsername id="loginUsername" name="loginUsername" type="text" placeholder="Martin" />
-        </div>
+    <form #loginForm (submit)="$event.preventDefault(); login(loginUsernameField.value, loginPasswordField.value)">
+        <app-input-field
+            #loginUsernameField="appInputField"
+            label="Nom d'utilisateur"
+            inputId="loginUsername"
+            name="loginUsername"
+            type="text"
+            placeholder="Martin"
+        ></app-input-field>
 
-        <div class="form-input">
-            <label for="loginPassword">Mot de passe</label>
-            <input #loginPassword id="loginPassword" name="loginPassword" type="password" placeholder="••••••••"/>
-        </div>
+        <app-input-field
+            #loginPasswordField="appInputField"
+            label="Mot de passe"
+            inputId="loginPassword"
+            name="loginPassword"
+            type="password"
+            placeholder="••••••••"
+        ></app-input-field>
 
-        <button type="submit">Se connecter</button>
+        <button class="button-primary" type="submit">Se connecter</button>
     </form>
 </div>

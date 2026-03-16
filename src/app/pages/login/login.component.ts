@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
 import { IconPrimaryComponent } from 'src/app/shared/icon-primary/icon-primary.component';
+import { InputFieldComponent } from 'src/app/shared/input-field/input-field.component';
 
 @Component({
   selector: 'app-login',
-  imports: [MatIconModule, IconPrimaryComponent],
+  imports: [MatIconModule, IconPrimaryComponent, InputFieldComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -33,6 +34,7 @@ export class LoginComponent
         console.log('Login success', response);
         if (response.success && 'access' in response && 'refresh' in response) {
           this.authService.setTokens(response.access, response.refresh);
+          localStorage.setItem('username', response.user.username);
           this.router.navigate(['/dashboard'])
         }
       },

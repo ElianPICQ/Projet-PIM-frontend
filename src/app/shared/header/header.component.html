@@ -1,0 +1,10 @@
+<div id="header">
+	<button
+		id="header-toggle-button"
+		type="button"
+		(click)="toggleSidebar()"
+		[attr.aria-label]="isCollapsed ? 'Open sidebar' : 'Close sidebar'"
+	>
+		<mat-icon aria-hidden="true">menu</mat-icon>
+	</button>
+</div>

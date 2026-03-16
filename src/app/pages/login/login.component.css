@@ -7,22 +7,6 @@
     height: 100vh;
 }
 
-#login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    max-width: 280px;
-    padding: 15px;
-    gap: 8px;
-
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    color: var(--color-text-darkblue);
-}
-
 #login-container h1 {
     font-size: 18px;
     font-weight: 600;
@@ -52,7 +36,6 @@
 .form-input input {
     padding: 3px 5px;
     margin-bottom: 15px;
-    color: var(--color-text-darkblue);
     font-size: 10px;
     border: 1px solid var(--color-grey-discreet);
     border-radius: 5px;
@@ -62,16 +45,4 @@
 .form-input input:focus-visible {
     outline: 1.5px solid var(--color-secondary);
     outline-offset: 1px;
-}
-
-#login-container button {
-    width: 100%;
-    padding: 4px;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--color-secondary);
-    color: var(--color-text-white);
-    font-size: 10px;
-    font-weight: 600;
-    cursor: pointer;
 }

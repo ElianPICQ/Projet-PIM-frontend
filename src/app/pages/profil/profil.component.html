@@ -1,3 +1,47 @@
+<app-header></app-header>
 <app-sidebar activePage="profil"></app-sidebar>
 
-<p>profil works!</p>
+<h2>Mon profil</h2>
+
+<div class="default-container">
+    <app-icon-primary icon="person" state="secondary"></app-icon-primary>
+    <div id="profil-info">
+        <span id="username">{{ username }}</span>
+        <span id="email">placeholder&#64;mail.com</span>
+    </div>
+</div>
+
+<div class="default-container change-password">
+    <h3><app-icon-primary icon="lock" state="tertiary"></app-icon-primary>Modifier le mot de passe</h3>
+
+    <form (submit)="$event.preventDefault(); changePassword()">
+        <app-input-field
+            #oldPasswordField="appInputField"
+            label="Mot de passe actuel"
+            inputId="oldPassword"
+            name="oldPassword"
+            type="password"
+            placeholder="••••••••"
+        ></app-input-field>
+
+        <app-input-field
+            #newPasswordField="appInputField"
+            label="Nouveau mot de passe"
+            inputId="newPassword"
+            name="newPassword"
+            type="password"
+            placeholder="••••••••"
+        ></app-input-field>
+
+        <app-input-field
+            #confirmPasswordField="appInputField"
+            label="Confirmer le mot de passe"
+            inputId="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+        ></app-input-field>
+
+        <button class="button-primary" type="submit">Modifier le mot de passe</button>
+    </form>
+</div>

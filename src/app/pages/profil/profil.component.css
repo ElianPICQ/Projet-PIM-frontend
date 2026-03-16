@@ -1,4 +1,62 @@
 :host {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    margin-top: 30px;
+    padding: 15px;
+    gap: 15px;
+}
+
+h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+h3 {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.default-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+#profil-info {
+    display: flex;
+    flex-direction: column;
+}
+
+#username {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#email {
+    font-size: 0.9rem;
+    font-weight: 300;
+}
+
+.tertiary {
+    font-size: 1.2rem;
+}
+
+.change-password {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
+}
+
+.change-password app-icon-primary {
+    --icon-primary-size: 1.2rem;
+}
+
+.change-password form {
+    width: 100%;
 }

@@ -6,6 +6,7 @@
     --color-primary: #003051;
     --color-primary-light: #3F7CAF;
     --color-secondary: #FC9100;
+    --color-secondary-light: #FC91001F;
     --color-grey-discreet: #afafaf;
 }
 
@@ -17,13 +18,49 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
+html, body {
+    height: 100%;
+}
+
 html {
-    font-size: 16px;
+    font-size: 12px;
     font-family: "Inter", sans-serif;
+    color: var(--color-text-darkblue);
 }
 
 body {
     margin: 0;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-icon {
+    width: 100%;
+    height: 100%;
+}
+
+
+.button-primary {
+    width: 100%;
+    padding: 4px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-secondary);
+    color: var(--color-text-white);
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.default-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 280px;
+    padding: 15px;
+    gap: 8px;
+
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
