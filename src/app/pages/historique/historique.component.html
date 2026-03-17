@@ -1,3 +1,40 @@
 <app-sidebar activePage="historique"></app-sidebar>
 
-<p>historique works!</p>
+<div class="page-content">
+  <h1>Historique</h1>
+  <p>{{ transactions.length }} transaction(s)</p>
+
+  <p class="empty" *ngIf="transactions.length === 0">Aucune transaction pour le moment.</p>
+
+  <table *ngIf="transactions.length > 0">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Date de mouvement</th>
+        <th>Type</th>
+        <th>Catégorie</th>
+        <th>Quantité</th>
+        <th>Prix avant promo</th>
+        <th>Remise</th>
+        <th>Prix unitaire</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of transactions">
+        <td>{{ t.nom }}</td>
+        <td>{{ t.date }}</td>
+        <td><span class="badge-achat">{{ t.type_mouvement }}</span></td>
+        <td>{{ t.categorie }}</td>
+        <td>{{ t.quantite }}</td>
+        <td>{{ t.prix_avant_promo }}€</td>
+        <td>
+          <span *ngIf="t.remise > 0" class="badge-promo-oui">{{ t.remise }}%</span>
+          <span *ngIf="t.remise === 0">—</span>
+        </td>
+        <td>{{ t.prix_unitaire }}€</td>
+        <td class="total">{{ t.total }}€</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

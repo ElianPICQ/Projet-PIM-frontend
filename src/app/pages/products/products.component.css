@@ -1,3 +1,16 @@
+.page-content {
+  padding: 32px;
+  overflow-y: auto;
+  margin-left:170px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 h1 {
   font-size: 28px;
   font-weight: bold;
@@ -215,6 +228,21 @@ tr:hover {
 }
 
 .btn-confirmer:hover {
+  background-color: #e07f00;
+}
+
+.btn-confirmer-tout {
+  background-color: #FC9100;
+  color: #FFFFFF;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-confirmer-tout:hover {
   background-color: #e07f00;
 }
 
