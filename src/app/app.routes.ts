@@ -34,7 +34,8 @@ export const routes: Routes = [
         canActivate: [protectedRouteGuard],
     },
     {
-        path: 'products',
+        path: 'produits',
         component: ProductsComponent,
+        canActivate: [protectedRouteGuard],
     },
 ];

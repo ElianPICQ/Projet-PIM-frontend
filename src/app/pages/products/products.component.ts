@@ -5,6 +5,7 @@ import { ProductService, Product } from 'src/app/core/services/product.service';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 import { SidebarStateService } from 'src/app/core/services/sidebar-state.service';
+import { TransactionService, Transaction } from 'src/app/core/services/transaction.service';
 
 @Component({
   selector: 'app-products',
@@ -16,44 +17,24 @@ export class ProductsComponent implements OnInit {
 
   products: Product[] = [];
 
-  categoryLabels: { [key: number]: string } = { 
+  categoryLabels: { [key: number]: string } = {
     0: 'Poissons',
     1: 'Coquillages',
     2: 'Crustacés'
   };
 
-  // Quantités par produit (clé = id du produit)
   quantities: { [id: number]: number } = {};
-
-  // Modal
-  showModal = false;
-  selectedProduct: Product | null = null;
-  purchasePrice: number | null = null;
-  hasPromo = false;
-  discountAmount: number = 0;
-
-  get finalPrice(): number {
-    if (!this.purchasePrice) return 0;
-    if (this.hasPromo) return this.purchasePrice - (this.purchasePrice * this.discountAmount / 100);
-    return this.purchasePrice;
-  }
 
   constructor(
     private productService: ProductService,
-    private readonly sidebarStateService: SidebarStateService
+    private transactionService: TransactionService
   ) {}
-
-  @HostBinding('style.margin-left.px')
-  get hostMarginLeft(): number {
-    return this.sidebarStateService.isCollapsed ? 50 : 180;
-  }
 
   ngOnInit() {
     this.productService.getProducts().subscribe({
       next: (data) => {
         this.products = data;
-        // Initialise toutes les quantités à 1
-        data.forEach(p => this.quantities[p.id] = 1);
+        data.forEach(p => this.quantities[p.id] = 0);
       },
       error: (err) => console.error('Erreur chargement produits', err)
     });
@@ -64,37 +45,49 @@ export class ProductsComponent implements OnInit {
   }
 
   decrement(product: Product) {
-    if (this.quantities[product.id] > 1) {
+    if (this.quantities[product.id] > 0) {
       this.quantities[product.id]--;
     }
   }
 
-  openModal(product: Product) {
-    this.selectedProduct = product;
-    this.purchasePrice = null;
-    this.hasPromo = false;
-    this.discountAmount = 0;
-    this.showModal = true;
+  getPrixFinal(product: Product): number {
+    if (product.sale) {
+      return product.price - (product.price * product.discount / 100);
+    }
+    return product.price;
   }
 
-  closeModal() {
-    this.showModal = false;
-    this.selectedProduct = null;
-  }
+  confirmer(product: Product) {
+    const prixFinal = this.getPrixFinal(product);
 
-  confirmAddStock() {
-    if (!this.selectedProduct || !this.purchasePrice) return;
-
-    const payload = {
-      productId: this.selectedProduct.id,
-      quantity: this.quantities[this.selectedProduct.id],
-      purchasePrice: this.purchasePrice,
-      sale: this.hasPromo,
-      discount: this.hasPromo ? this.discountAmount : 0,
-      finalPrice: this.finalPrice
+    const transaction: Transaction = {
+      nom: product.name,
+      type_mouvement: 'Achat',
+      quantite: this.quantities[product.id],
+      categorie: this.categoryLabels[product.category],
+      prix_avant_promo: product.price,
+      remise: product.sale ? product.discount : 0,
+      prix_unitaire: Math.round(prixFinal * 100) / 100,
+      total: Math.round(prixFinal * this.quantities[product.id] * 100) / 100
     };
 
-    console.log('Ajout au stock :', payload);
-    this.closeModal();
+    this.transactionService.addTransaction(transaction).subscribe({
+      next: () => {
+        this.quantities[product.id] = 0;
+        alert(`${product.name} ajouté à l'historique !`);
+      },
+      error: (err) => console.error('Erreur ajout transaction', err)
+    });
+  }
+
+  confirmerTout() {
+    const lignesSelectionnees = this.products.filter(
+      p => p.availability && this.quantities[p.id] > 0
+    );
+    if (lignesSelectionnees.length === 0) {
+      alert('Aucun produit sélectionné.');
+      return;
+    }
+    lignesSelectionnees.forEach(p => this.confirmer(p));
   }
 }

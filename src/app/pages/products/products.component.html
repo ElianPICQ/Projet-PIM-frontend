@@ -1,75 +1,56 @@
-<app-header></app-header>
+<app-sidebar activePage="produits"></app-sidebar>
+
+<div class="page-content">
+  <div class="page-header">
+    <div>
+      <app-header></app-header>
 <app-sidebar activePage="products"></app-sidebar>
 
 <h2>Produits</h2>
-<p>{{ products.length }} produit(s)</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Catégorie</th>
-      <th>Fournisseur</th>
-      <th>Commentaire</th>
-      <th>Prix initial</th>
-      <th>Promotion</th>
-      <th>Prix final</th>
-      <th>Statut</th>
-      <th>Ajouter au stock</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let product of products">
-      <td>{{ product.name }}</td>
-      <td>{{ categoryLabels[product.category] }}</td>
-      <td><span class="badge-fournisseur">{{ product.owner }}</span></td>
-      <td><span class="comment">{{ product.comments }}</span></td>
-      <td>{{ product.price }}€</td>
-      <td>
-        <span [class]="product.sale ? 'badge-promo-oui' : ''">
-            {{ product.sale ? 'Oui' : 'Non' }}
-        </span>
-      </td>
-      <td><span [class]="product.sale ? 'prix-vert' : ''">{{ product.sale ? (product.price - product.discount) + '€' : '—' }}</span></td>
-      <td>
-        <span [class]="product.availability ? 'badge-stock' : 'badge-rupture'">
-          {{ product.availability ? 'En stock' : 'Rupture' }}
-        </span>
-      </td>
-      <td class="actions">
-        <button class="btn-quantity" (click)="decrement(product)" [disabled]="!product.availability">−</button>
-        <span class="quantity">×{{ quantities[product.id] }} / {{ product.unit }}</span>
-        <button class="btn-quantity" (click)="increment(product)" [disabled]="!product.availability">+</button>
-        <button class="btn-ajouter" (click)="openModal(product)" [disabled]="!product.availability">Ajouter</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Modal -->
-<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
-  <div class="modal" (click)="$event.stopPropagation()">
-    <h2>Ajouter au stock</h2>
-    <p class="modal-produit">{{ selectedProduct?.name }} — {{ quantities[selectedProduct!.id] }} {{ selectedProduct?.unit }}</p>
-
-    <label>Prix d'achat (€)</label>
-    <input type="number" [(ngModel)]="purchasePrice" placeholder="Ex: 12.50" min="0" />
-
-    <label class="label-promo">
-      <input type="checkbox" [(ngModel)]="hasPromo" />
-      Appliquer une promotion
-    </label>
-
-    <div *ngIf="hasPromo">
-      <label>Remise (%)</label>
-      <input type="number" [(ngModel)]="discountAmount" placeholder="Ex: 10" min="0" max="100" />
+      <p>{{ products.length }} produit(s)</p>
     </div>
-
-    <p class="prix-final">Prix final : <strong>{{ finalPrice }}€</strong></p>
-
-    <div class="modal-actions">
-      <button class="btn-annuler" (click)="closeModal()">Annuler</button>
-      <button class="btn-confirmer" (click)="confirmAddStock()">Confirmer</button>
-    </div>
+    <button class="btn-confirmer-tout" (click)="confirmerTout()">✓ Confirmer tout</button>
   </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Catégorie</th>
+        <th>Fournisseur</th>
+        <th>Commentaire</th>
+        <th>Prix actuel</th>
+        <th>Promotion</th>
+        <th>Statut</th>
+        <th>Quantité</th>
+        <th>Confirmer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ categoryLabels[product.category] }}</td>
+        <td><span class="badge-fournisseur">{{ product.owner }}</span></td>
+        <td><span class="comment">{{ product.comments }}</span></td>
+        <td>{{ product.price }}€</td>
+        <td>
+          <span *ngIf="product.sale" class="badge-promo-oui">{{ product.discount }}%</span>
+          <span *ngIf="!product.sale">—</span>
+        </td>
+        <td>
+          <span [class]="product.availability ? 'badge-stock' : 'badge-rupture'">
+            {{ product.availability ? 'En stock' : 'Rupture' }}
+          </span>
+        </td>
+        <td class="actions">
+          <button class="btn-quantity" (click)="decrement(product)" [disabled]="!product.availability">−</button>
+          <span class="quantity">×{{ quantities[product.id] }} | {{ product.unit }}</span>
+          <button class="btn-quantity" (click)="increment(product)" [disabled]="!product.availability">+</button>
+        </td>
+        <td>
+          <button class="btn-confirmer" (click)="confirmer(product)" [disabled]="!product.availability || quantities[product.id] === 0">Confirmer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
