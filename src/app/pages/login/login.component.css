@@ -8,12 +8,12 @@
 }
 
 #login-container h1 {
-    font-size: 18px;
+    font-size: 1.5rem;
     font-weight: 600;
 }
 
 #login-container h2 {
-    font-size: 10px;
+    font-size: 0.8333rem;
     font-weight: 400;
 }
 
@@ -26,7 +26,7 @@
     flex-direction: column;
 
     width: 100%;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 .form-input label {
@@ -36,7 +36,7 @@
 .form-input input {
     padding: 3px 5px;
     margin-bottom: 15px;
-    font-size: 10px;
+    font-size: 0.8333rem;
     border: 1px solid var(--color-grey-discreet);
     border-radius: 5px;
 }

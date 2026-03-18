@@ -35,7 +35,7 @@
 }
 
 .nav-material-icon {
-    font-size: var(--icon-primary-size, 24px);
+    font-size: var(--icon-primary-size, 2rem);
     width: var(--icon-primary-size, 24px);
     height:var(--icon-primary-size, 24px);
 }
