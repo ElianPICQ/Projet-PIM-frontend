@@ -1,10 +1,11 @@
 import { Component, HostBinding } from '@angular/core';
 import { SidebarStateService } from 'src/app/core/services/sidebar-state.service';
+import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [SidebarComponent],
+  imports: [HeaderComponent, SidebarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

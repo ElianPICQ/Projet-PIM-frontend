@@ -1,10 +1,11 @@
 import { Component, HostBinding } from '@angular/core';
 import { SidebarStateService } from 'src/app/core/services/sidebar-state.service';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
+import { HeaderComponent } from "src/app/shared/header/header.component";
 
 @Component({
   selector: 'app-historique',
-  imports: [SidebarComponent],
+  imports: [SidebarComponent, HeaderComponent],
   templateUrl: './historique.component.html',
   styleUrl: './historique.component.css'
 })

@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from 'src/app/core/services/product.service';
+import { HeaderComponent } from 'src/app/shared/header/header.component';
+import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
+import { SidebarStateService } from 'src/app/core/services/sidebar-state.service';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, FormsModule],
+  imports: [HeaderComponent, SidebarComponent, CommonModule, FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -35,7 +38,15 @@ export class ProductsComponent implements OnInit {
     return this.purchasePrice;
   }
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private readonly sidebarStateService: SidebarStateService
+  ) {}
+
+  @HostBinding('style.margin-left.px')
+  get hostMarginLeft(): number {
+    return this.sidebarStateService.isCollapsed ? 50 : 180;
+  }
 
   ngOnInit() {
     this.productService.getProducts().subscribe({

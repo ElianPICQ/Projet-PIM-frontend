@@ -27,7 +27,7 @@ export class SidebarComponent {
 
   private readonly pageIcons: Record<string, string> = {
     dashboard: 'dashboard',
-    produits: 'inventory_2',
+    products: 'inventory_2',
     stocks: 'warehouse',
     historique: 'history',
     profil: 'person'
