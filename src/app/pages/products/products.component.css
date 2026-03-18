@@ -8,16 +8,11 @@
     padding: 15px;
 }
 
-.page-content {
-  padding: 32px;
-  overflow-y: auto;
-  margin-left:170px;
-}
-
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   margin-bottom: 20px;
 }
 

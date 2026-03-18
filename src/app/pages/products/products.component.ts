@@ -27,7 +27,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private sidebarStateService: SidebarStateService
   ) {}
 
   ngOnInit() {
@@ -38,6 +39,11 @@ export class ProductsComponent implements OnInit {
       },
       error: (err) => console.error('Erreur chargement produits', err)
     });
+  }
+
+  @HostBinding('style.margin-left.px')
+  get hostMarginLeft(): number {
+    return this.sidebarStateService.isCollapsed ? 50 : 180;
   }
 
   increment(product: Product) {
