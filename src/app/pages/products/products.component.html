@@ -12,45 +12,44 @@
     <button class="btn-confirmer-tout" (click)="confirmerTout()">✓ Confirmer tout</button>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Catégorie</th>
-        <th>Fournisseur</th>
-        <th>Commentaire</th>
-        <th>Prix actuel</th>
-        <th>Promotion</th>
-        <th>Statut</th>
-        <th>Quantité</th>
-        <th>Confirmer</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{ product.name }}</td>
-        <td>{{ categoryLabels[product.category] }}</td>
-        <td><span class="badge-fournisseur">{{ product.owner }}</span></td>
-        <td><span class="comment">{{ product.comments }}</span></td>
-        <td>{{ product.price }}€</td>
-        <td>
-          <span *ngIf="product.sale" class="badge-promo-oui">{{ product.discount }}%</span>
-          <span *ngIf="!product.sale">—</span>
-        </td>
-        <td>
-          <span [class]="product.availability ? 'badge-stock' : 'badge-rupture'">
-            {{ product.availability ? 'En stock' : 'Rupture' }}
-          </span>
-        </td>
-        <td class="actions">
-          <button class="btn-quantity" (click)="decrement(product)" [disabled]="!product.availability">−</button>
-          <span class="quantity">×{{ quantities[product.id] }} | {{ product.unit }}</span>
-          <button class="btn-quantity" (click)="increment(product)" [disabled]="!product.availability">+</button>
-        </td>
-        <td>
-          <button class="btn-confirmer" (click)="confirmer(product)" [disabled]="!product.availability || quantities[product.id] === 0">Confirmer</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Catégorie</th>
+      <th>Fournisseur</th>
+      <th>Commentaire</th>
+      <th>Prix actuel</th>
+      <th>Promotion</th>
+      <th>Statut</th>
+      <th>Quantité</th>
+      <th>Confirmer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.name }}</td>
+      <td>{{ categoryLabels[product.category] }}</td>
+      <td><span class="badge-fournisseur">{{ product.owner }}</span></td>
+      <td><span class="comment">{{ product.comments }}</span></td>
+      <td>{{ product.price }}€</td>
+      <td>
+        <span *ngIf="product.sale" class="badge-promo-oui">{{ product.discount }}%</span>
+        <span *ngIf="!product.sale">—</span>
+      </td>
+      <td>
+        <span [class]="product.availability ? 'badge-stock' : 'badge-rupture'">
+          {{ product.availability ? 'En stock' : 'Rupture' }}
+        </span>
+      </td>
+      <td class="actions">
+        <button class="btn-quantity" (click)="decrement(product)" [disabled]="!product.availability">−</button>
+        <span class="quantity">×{{ getQuantity(product.id) }} | {{ product.unit }}</span>
+        <button class="btn-quantity" (click)="increment(product)" [disabled]="!product.availability">+</button>
+      </td>
+      <td>
+        <button class="btn-confirmer" (click)="confirmer(product)" [disabled]="!product.availability || quantities[product.id] === 0">Confirmer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
