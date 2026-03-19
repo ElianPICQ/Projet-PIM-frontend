@@ -42,7 +42,7 @@
       </td>
       <td class="actions">
         <button class="btn-quantity" (click)="decrement(product)" [disabled]="!product.availability">−</button>
-        <span class="quantity">×{{ quantities[product.id] }} | {{ product.unit }}</span>
+        <span class="quantity">×{{ getQuantity(product.id) }} | {{ product.unit }}</span>
         <button class="btn-quantity" (click)="increment(product)" [disabled]="!product.availability">+</button>
       </td>
       <td>
