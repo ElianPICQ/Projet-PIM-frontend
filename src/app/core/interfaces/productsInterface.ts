@@ -9,7 +9,7 @@ export interface Product {
   sale: boolean;
   discount: number;
   comments: string;
-  supplier: string;
+  owner: string;
 }
 
 // Product selected by the user to be added to the stock
