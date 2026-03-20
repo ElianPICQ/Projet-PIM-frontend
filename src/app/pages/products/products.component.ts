@@ -1,6 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { ProductService } from 'src/app/core/services/product.service';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
@@ -8,17 +7,22 @@ import { SidebarStateService } from 'src/app/core/services/sidebar-state.service
 import { ModalComponent, ModalItem } from 'src/app/shared/modal/modal.component';
 import { Product, ProductPageProduct } from 'src/app/core/interfaces/productsInterface';
 import { StockService } from 'src/app/core/services/stock.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-products',
-  imports: [HeaderComponent, SidebarComponent, CommonModule, FormsModule, ModalComponent],
+  imports: [HeaderComponent, SidebarComponent, CommonModule, MatFormFieldModule, MatSelectModule, ModalComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
 
   products: Product[] = [];
+  productsFiltered: Product[] = [];
   SelectedProducts: ProductPageProduct[] = [];
+  
+  filterCategory: -1 | 0 | 1 | 2 = -1;
 
   categoryLabels: { [key: number]: string } = {
     0: 'Poissons',
@@ -39,16 +43,28 @@ export class ProductsComponent implements OnInit {
     private sidebarStateService: SidebarStateService
   ) {}
 
+  ngOnInit() {
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+        this.onFilterCategoryChange(this.filterCategory);
+      },
+      error: (err) => console.error('Erreur chargement produits', err)
+    });
+  }
+
   @HostBinding('style.margin-left.px')
   get hostMarginLeft(): number {
     return this.sidebarStateService.isCollapsed ? 50 : 180;
   }
 
-  ngOnInit() {
-    this.productService.getProducts().subscribe({
-      next: (data) => { this.products = data; },
-      error: (err) => console.error('Erreur chargement produits', err)
-    });
+  onFilterCategoryChange(category: number) {
+    if (category === -1) {
+      this.productsFiltered = this.products;
+    } else {
+      this.productsFiltered = this.products.filter(p => p.category === category);
+    }
+    console.log(this.productsFiltered)
   }
 
   increment(product: Product) {
@@ -64,7 +80,7 @@ export class ProductsComponent implements OnInit {
       quantity: 1,
       unit: product.unit,
       price: product.price,
-      discount: product.sale ? product.discount : 0,
+      discount: 0,
       comments: product.comments,
       supplier: product.supplier
     });

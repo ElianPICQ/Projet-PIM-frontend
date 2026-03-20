@@ -49,7 +49,7 @@ p {
     border-radius: 5px;
     background-color: var(--color-secondary);
     color: var(--color-text-white);
-    font-size: 0.8333rem;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
 }
@@ -62,7 +62,7 @@ p {
     gap: 8px;
 
     width: 100%;
-    max-width: 280px;
+    max-width: 360px;
 }
 
 .shadow-container {

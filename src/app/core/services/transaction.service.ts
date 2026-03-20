@@ -8,7 +8,7 @@ export interface Transaction {
   type_mouvement: string;
   original_product_id: number;
   name: string;
-  category: string;
+  category: number;
   quantity: number;
   unit: string;
   price: number;

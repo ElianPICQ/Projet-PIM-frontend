@@ -3,28 +3,54 @@
 <h2>Stocks</h2>
 <p class="number-of-x">{{ stocks.length }} stock(s)</p>
 <p class="empty" *ngIf="stocks.length === 0">Aucun stock pour le moment.</p>
+
+<div class="table-tools">
+  <div class="filters">
+    <mat-form-field appearance="outline" class="operation-field" subscriptSizing="dynamic">
+      <mat-select
+        class="select-input"
+        [value]="filterCategory"
+        (selectionChange)="onFilterCategoryChange($event.value)"
+      >
+        <mat-option [value]="-1">Tous</mat-option>
+        <mat-option [value]="0">Poissons</mat-option>
+        <mat-option [value]="1">Coquillages</mat-option>
+        <mat-option [value]="2">Crustacés</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <button class="btn-confirmer-tout" (click)="confirmerTout()">✓ Confirmer tout</button>
+</div>
+
 <table class="default-table" *ngIf="stocks.length > 0">
   <thead>
     <tr>
       <th class="default-table-head">Catégorie</th>
-      <th class="default-table-head">Nom</th>
+      <th class="default-table-head">Produit</th>
       <th class="default-table-head">Fournisseur</th>
       <th class="default-table-head">Quantité</th>
-      <th class="default-table-head">Prix</th>
-      <th class="default-table-head">Remise</th>
-      <th class="default-table-head">Commentaire</th>
-      <th class="default-table-head">Opération</th>
+      <th class="default-table-head">Prix Achat</th>
+      <th class="default-table-head">Prix Vente Unité</th>
+      <th class="default-table-head">Réduction</th>
+      <th class="default-table-head">Prix Final</th>
+      <th class="default-table-head">Marge</th>
+      <th class="default-table-head">Infos</th>
+      <th class="default-table-head">Operation</th>
       <th class="default-table-head">Supprimer</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of stocks" [ngClass]="{'row-out-of-stock': row.quantity === 0, 'row-low-stock': row.quantity > 0 && row.quantity < 10}">
-      <td class="default-table-cell">{{ row.category }}</td>
+    <tr *ngFor="let row of productsFiltered" [ngClass]="{'row-out-of-stock': row.quantity === 0, 'row-low-stock': row.quantity > 0 && row.quantity < 10}">
+      <td class="default-table-cell">{{ categoryLabels[row.category] }}</td>
       <td class="default-table-cell">{{ row.name }}</td>
       <td class="default-table-cell">{{ row.supplier }}</td>
-      <td class="default-table-cell">{{ row.quantity }} {{ row.unit }}</td>
+      <td class="default-table-cell">{{ row.quantity }} <span *ngIf="displayMultiplySymbol(row.unit)">x</span> {{ row.unit }}</td>
       <td class="default-table-cell">{{ row.price }}</td>
-      <td class="default-table-cell">{{ row.discount }}</td>
+      <td class="default-table-cell"><input type="number" [value]="row.sellPrice" name="sellPrice" (change)="row.sellPrice = +$any($event.target).value; updateFinalPrice(row)"></td>
+      <td class="default-table-cell"><input type="number" step="0.01" [value]="row.discount" name="discount" (change)="row.discount = +$any($event.target).value; updateFinalPrice(row)"></td>
+      <td class="default-table-cell">{{ row.finalSellPrice }}</td>
+      <td class="default-table-cell"><span class="margin" [ngClass]="((row.finalSellPrice - row.price) / row.price) * 100 > 0 ? 'positive' : 'negative'">{{ ((row.finalSellPrice - row.price) / row.price) * 100 }} %</span></td>
       <td class="default-table-cell">{{ row.comments }}</td>
       <td class="default-table-cell">
         <div class="operations">
@@ -38,9 +64,11 @@
               <mat-option value="Invendu">Invendu</mat-option>
             </mat-select>
           </mat-form-field>
-          <button class="btn-quantity" (click)="decrement(row)" [disabled]="!getQuantity(row.id)">−</button>
-          <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
-          <button class="btn-quantity" (click)="increment(row)">+</button>
+          <span class="operations-btns">
+            <button class="btn-quantity" (click)="decrement(row)" [disabled]="!getQuantity(row.id)">−</button>
+            <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
+            <button class="btn-quantity" (click)="increment(row)">+</button>
+          </span>
           <button class="btn-confirmer" (click)="confirmer(row)" [disabled]="!getQuantity(row.id)">Confirmer</button>
         </div>
       </td>

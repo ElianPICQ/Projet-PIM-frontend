@@ -1,38 +1,36 @@
 <app-header></app-header>
 <app-sidebar activePage="historique"></app-sidebar>
 
-<div class="page-content">
-  <h2>Historique</h2>
-  <p class="number-of-x">{{ transactions.length }} transaction(s)</p>
+<h2>Historique</h2>
+<p class="number-of-x">{{ transactions.length }} transaction(s)</p>
 
-  <p class="empty" *ngIf="transactions.length === 0">Aucune transaction pour le moment.</p>
+<p class="empty" *ngIf="transactions.length === 0">Aucune transaction pour le moment.</p>
 
-  <table class="default-table" *ngIf="transactions.length > 0">
-    <thead>
-      <tr>
-        <th class="default-table-head">Date</th>
-        <th class="default-table-head">Type</th>
-        <th class="default-table-head">Category</th>
-        <th class="default-table-head">Name</th>
-        <th class="default-table-head">Fournisseur</th>
-        <th class="default-table-head">Quantity</th>
-        <th class="default-table-head">Price</th>
-        <th class="default-table-head">Discount</th>
-        <th class="default-table-head">Comments</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of transactions" [ngClass]="{'row-achat': row.type_mouvement === 'Achat', 'row-vente': row.type_mouvement === 'Vente', 'row-invendu': row.type_mouvement === 'Invendu'}">
-        <td class="default-table-cell">{{ row.date }}</td>
-        <td class="default-table-cell">{{ row.type_mouvement }}</td>
-        <td class="default-table-cell">{{ row.category }}</td>
-        <td class="default-table-cell">{{ row.name }}</td>
-        <td class="default-table-cell">{{ row.supplier }}</td>
-        <td class="default-table-cell">{{ row.quantity }} {{ row.unit }}</td>
-        <td class="default-table-cell">{{ row.price }}</td>
-        <td class="default-table-cell">{{ row.discount }}</td>
-        <td class="default-table-cell">{{ row.comments }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table class="default-table" *ngIf="transactions.length > 0">
+  <thead>
+    <tr>
+      <th class="default-table-head">Date</th>
+      <th class="default-table-head">Type</th>
+      <th class="default-table-head">Categorie</th>
+      <th class="default-table-head">Nom</th>
+      <th class="default-table-head">Fournisseur</th>
+      <th class="default-table-head">Quantité</th>
+      <th class="default-table-head">Prix</th>
+      <th class="default-table-head">Discount</th>
+      <th class="default-table-head">Infos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of transactions" [ngClass]="{'row-achat': row.type_mouvement === 'Achat', 'row-vente': row.type_mouvement === 'Vente', 'row-invendu': row.type_mouvement === 'Invendu'}">
+      <td class="default-table-cell">{{ row.date }}</td>
+      <td class="default-table-cell">{{ row.type_mouvement }}</td>
+      <td class="default-table-cell">{{ categoryLabels[row.category] }}</td>
+      <td class="default-table-cell">{{ row.name }}</td>
+      <td class="default-table-cell">{{ row.supplier }}</td>
+      <td class="default-table-cell">{{ row.quantity }} {{ row.unit }}</td>
+      <td class="default-table-cell">{{ row.price }}</td>
+      <td class="default-table-cell">{{ row.discount }}</td>
+      <td class="default-table-cell">{{ row.comments }}</td>
+    </tr>
+  </tbody>
+</table>

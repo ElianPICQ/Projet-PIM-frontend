@@ -20,8 +20,21 @@ import { CommonModule } from '@angular/common';
 export class StocksComponent implements OnInit {
 
   stocks: StockPageProduct[] = [];
+  productsFiltered: StockPageProduct[] = [];
   selectedOperations: Record<number, 'Achat' | 'Vente' | 'Invendu'> = {};
-  displayedColumns: string[] = ['category', 'name', 'supplier', 'quantity', 'price', 'discount', 'comments', 'operation', 'delete'];
+  displayedColumns: string[] = ['category', 'name', 'supplier', 'quantity', 'price', 'sellPrice', 'discount', 'finalSellPrice', 'margin', 'comments', 'operation', 'delete'];
+  private basicUnits: string[] = ['kg', 'pièce', 'Dz'];
+
+  sellPrice: number = 0;
+  finalSellPrice: number = 0;
+
+  filterCategory: -1 | 0 | 1 | 2 = -1;
+
+  categoryLabels: { [key: number]: string } = {
+    0: 'Poissons',
+    1: 'Coquillages',
+    2: 'Crustacés'
+  };
 
   productsToUpdate: StockProductToUpdate[] = [];
   productsToAdd: StockProductToUpdate[] = [];
@@ -52,6 +65,11 @@ export class StocksComponent implements OnInit {
     this.stockService.getStock().subscribe({
       next: (data) => {
         this.stocks = data;
+        this.stocks.forEach(stock => {
+          stock.sellPrice = stock.price;
+          stock.finalSellPrice = stock.price;
+        });
+        this.onFilterCategoryChange(this.filterCategory);
         this.stocks.forEach((item) => {
           if (!this.selectedOperations[item.id]) {
             this.selectedOperations[item.id] = 'Achat';
@@ -62,12 +80,29 @@ export class StocksComponent implements OnInit {
     });
   }
 
+  onFilterCategoryChange(category: number) {
+    if (category === -1) {
+      this.productsFiltered = this.stocks;
+    } else {
+      this.productsFiltered = this.stocks.filter(p => +p.category === category);
+    }
+    console.log(this.productsFiltered)
+  }
+
+  displayMultiplySymbol(unit: string) {
+    return !this.basicUnits.includes(unit);
+  }
+
   onOperationChange(product: StockPageProduct, operation: StockProductToUpdate['operation']) {
     this.selectedOperations[product.id] = operation;
     const selected = this.productsToUpdate.find((p) => p.id === product.id);
     if (selected) selected.operation = operation;
   }
 
+  updateFinalPrice(product: StockPageProduct) {
+    product.finalSellPrice = Math.round(product.sellPrice * (1 - product.discount) * 100) / 100;
+  }
+  
   decrement(product: StockPageProduct) {
     const index = this.productsToUpdate.findIndex((p) => p.id === product.id);
     if (index === -1) return;
@@ -92,7 +127,7 @@ export class StocksComponent implements OnInit {
       category: product.category,
       quantity: 1,
       unit: product.unit,
-      price: product.price,
+      price: this.selectedOperations[product.id] === 'Vente' ? product.finalSellPrice : product.price,
       discount: product.discount,
       comments: product.comments,
       supplier: product.supplier,
@@ -151,7 +186,27 @@ export class StocksComponent implements OnInit {
   }
 
   confirmerTout() {
-    if (this.productsToUpdate.length === 0) {
+    this.productsToAdd = this.productsToUpdate.filter((p) => p.operation === 'Achat');
+    this.productsToRemove = this.productsToUpdate.filter(
+      (p) => p.operation === 'Vente' || p.operation === 'Invendu'
+    );
+
+    for (const product of this.productsToRemove) {
+      if (product.quantity > this.stocks.find((p) => p.id === product.id)?.quantity!) {
+        alert(`Produit : ${product.name} - La quantité à retirer ne peut pas être supérieure à la quantité en stock.`);
+        return ;
+      }
+    }
+
+    const requests = [];
+    if (this.productsToAdd.length > 0) {
+      requests.push(this.stockService.addStock(this.productsToAdd));
+    }
+    if (this.productsToRemove.length > 0) {
+      requests.push(this.stockService.removeStock(this.productsToRemove));
+    }
+
+    if (requests.length === 0) {
       alert('Aucune modification à confirmer.');
       return;
     }

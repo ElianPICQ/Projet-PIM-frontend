@@ -34,7 +34,9 @@ export interface StockPageProduct {
   quantity: number;
   unit: string;
   price: number;
+  sellPrice: number;
   discount: number;
+  finalSellPrice: number;
   comments: string;
   supplier: string;
 }

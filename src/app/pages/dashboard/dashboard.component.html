@@ -26,7 +26,7 @@
   <div class="kpi-box shadow-container">
     <div>
         <h3>Stocks faibles</h3>
-        <p class="kpi-value">{{ dashboardData.low_stock }}</p>
+        <p class="kpi-value">{{ dashboardData.low_stock - dashboardData.out_of_stock }}</p>
         <p class="warning-text-small">Vigilence requise</p>
     </div>
     <app-icon-primary icon="warning"></app-icon-primary>

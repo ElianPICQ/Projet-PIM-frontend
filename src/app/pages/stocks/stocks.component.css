@@ -8,18 +8,50 @@
     padding: 15px;
 }
 
+.table-tools {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-confirmer-tout {
+  background-color: #FC9100;
+  color: #FFFFFF;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-confirmer-tout:hover {
+  background-color: #e07f00;
+}
+
+.margin.positive {
+    font-size: 1rem;
+    color: green;
+}
+
+.margin.negative {
+    font-size: 1rem;
+    color: red;
+}
+
 .operations {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 5px;
 }
 
 .row-out-of-stock td {
-    background-color: #fdecea;
+    background-color: #ff190088;
 }
 
 .row-low-stock td {
-    background-color: #fff3e0;
+    background-color: #ff9d0088;
 }
 
 .operations .quantity {
@@ -28,6 +60,8 @@
 
 .operation-field {
     width: 100px;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 .operation-field ::ng-deep .mat-mdc-text-field-wrapper {
@@ -48,6 +82,16 @@
     height: 100%;
     display: flex;
     align-items: center;
+}
+
+.operation-field ::ng-deep .mat-mdc-select-value {
+    color: var(--color-text-darkblue);
+}
+
+.operations-btns {
+    display: flex;
+    width: 160px;
+    justify-content: space-between;
 }
 
 .btn-quantity {
@@ -89,4 +133,5 @@
 
 .btn-delete:disabled {
   background-color: #ff000033;
+  cursor: not-allowed;
 }

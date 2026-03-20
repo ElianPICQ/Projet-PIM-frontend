@@ -15,6 +15,12 @@ export class HistoriqueComponent implements OnInit {
 
   transactions: Transaction[] = [];
 
+  categoryLabels: { [key: number]: string } = {
+    0: 'Poissons',
+    1: 'Coquillages',
+    2: 'Crustacés'
+  };
+
   constructor(
     private readonly sidebarStateService: SidebarStateService,
     private readonly transactionService: TransactionService

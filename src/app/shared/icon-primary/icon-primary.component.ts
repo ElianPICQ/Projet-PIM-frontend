@@ -10,4 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 export class IconPrimaryComponent {
   @Input() icon = '';
   @Input() state = 'default';
+  @Input() size = 36;
+  @Input() iconSize = 24;
 }
