@@ -1,16 +1,12 @@
 <app-header></app-header>
 <app-sidebar activePage="products"></app-sidebar>
-
 <div class="page-header">
   <div>
     <h2>Produits</h2>
     <p class="number-of-x">{{ products.length }} produit(s)</p>
   </div>
-  
-  <button class="btn-confirmer-tout" (click)="confirmerTout()">✓ Confirmer tout</button>
+  <button class="btn-confirmer-tout" (click)="confirmerTout()" [disabled]="!hasSelectedProducts">✓ Confirmer tout</button>
 </div>
-
-
 <table class="default-table">
   <thead>
     <tr>
@@ -43,14 +39,23 @@
       </td>
       <td class="actions">
         <span>
-        <button class="btn-quantity" (click)="decrement(row)" [disabled]="!row.availability">−</button>
-        <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
-        <button class="btn-quantity" (click)="increment(row)" [disabled]="!row.availability">+</button>
+          <button class="btn-quantity" (click)="decrement(row)" [disabled]="!row.availability">−</button>
+          <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
+          <button class="btn-quantity" (click)="increment(row)" [disabled]="!row.availability">+</button>
         </span>
       </td>
       <td>
-        <button class="btn-confirmer" (click)="confirmer(row)" [disabled]="!row.availability || quantities[row.id] === 0">Confirmer</button>
+        <button class="btn-confirmer" (click)="confirmer(row)" [disabled]="!row.availability || getQuantity(row.id) === 0">Confirmer</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+<app-modal
+  *ngIf="showModal"
+  [mode]="modalMode"
+  [items]="modalItems"
+  [titre]="modalTitre"
+  (confirm)="onModalConfirm()"
+  (cancel)="onModalCancel()">
+</app-modal>

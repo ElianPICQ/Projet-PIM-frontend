@@ -1,22 +1,19 @@
 <app-header></app-header>
 <app-sidebar activePage="stocks"></app-sidebar>
-
 <h2>Stocks</h2>
 <p class="number-of-x">{{ stocks.length }} stock(s)</p>
-
 <p class="empty" *ngIf="stocks.length === 0">Aucun stock pour le moment.</p>
-
 <table class="default-table" *ngIf="stocks.length > 0">
   <thead>
     <tr>
-      <th class="default-table-head">Category</th>
-      <th class="default-table-head">Name</th>
+      <th class="default-table-head">Catégorie</th>
+      <th class="default-table-head">Nom</th>
       <th class="default-table-head">Fournisseur</th>
-      <th class="default-table-head">Quantity</th>
-      <th class="default-table-head">Price</th>
-      <th class="default-table-head">Discount</th>
-      <th class="default-table-head">Comments</th>
-      <th class="default-table-head">Operation</th>
+      <th class="default-table-head">Quantité</th>
+      <th class="default-table-head">Prix</th>
+      <th class="default-table-head">Remise</th>
+      <th class="default-table-head">Commentaire</th>
+      <th class="default-table-head">Opération</th>
       <th class="default-table-head">Supprimer</th>
     </tr>
   </thead>
@@ -41,12 +38,10 @@
               <mat-option value="Invendu">Invendu</mat-option>
             </mat-select>
           </mat-form-field>
-
           <button class="btn-quantity" (click)="decrement(row)" [disabled]="!getQuantity(row.id)">−</button>
           <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
           <button class="btn-quantity" (click)="increment(row)">+</button>
-
-          <button class="btn-confirmer" (click)="confirmer(row)">Confirmer</button>
+          <button class="btn-confirmer" (click)="confirmer(row)" [disabled]="!getQuantity(row.id)">Confirmer</button>
         </div>
       </td>
       <td class="default-table-cell">
@@ -55,3 +50,12 @@
     </tr>
   </tbody>
 </table>
+
+<app-modal
+  *ngIf="showModal"
+  [mode]="modalMode"
+  [items]="modalItems"
+  [titre]="modalTitre"
+  (confirm)="onModalConfirm()"
+  (cancel)="onModalCancel()">
+</app-modal>

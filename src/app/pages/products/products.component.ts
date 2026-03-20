@@ -5,12 +5,13 @@ import { ProductService } from 'src/app/core/services/product.service';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 import { SidebarStateService } from 'src/app/core/services/sidebar-state.service';
+import { ModalComponent, ModalItem } from 'src/app/shared/modal/modal.component';
 import { Product, ProductPageProduct } from 'src/app/core/interfaces/productsInterface';
 import { StockService } from 'src/app/core/services/stock.service';
 
 @Component({
   selector: 'app-products',
-  imports: [HeaderComponent, SidebarComponent, CommonModule, FormsModule],
+  imports: [HeaderComponent, SidebarComponent, CommonModule, FormsModule, ModalComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -25,7 +26,12 @@ export class ProductsComponent implements OnInit {
     2: 'Crustacés'
   };
 
-  quantities: { [id: number]: number } = {};
+  // Modal
+  showModal = false;
+  modalMode: 'single' | 'recap' = 'single';
+  modalItems: ModalItem[] = [];
+  modalTitre = 'Confirmer';
+  private pendingAction: (() => void) | null = null;
 
   constructor(
     private productService: ProductService,
@@ -33,27 +39,24 @@ export class ProductsComponent implements OnInit {
     private sidebarStateService: SidebarStateService
   ) {}
 
-  ngOnInit() {
-    this.productService.getProducts().subscribe({
-      next: (data) => {
-        this.products = data;
-      },
-      error: (err) => console.error('Erreur chargement produits', err)
-    });
-  }
-
   @HostBinding('style.margin-left.px')
   get hostMarginLeft(): number {
     return this.sidebarStateService.isCollapsed ? 50 : 180;
   }
 
+  ngOnInit() {
+    this.productService.getProducts().subscribe({
+      next: (data) => { this.products = data; },
+      error: (err) => console.error('Erreur chargement produits', err)
+    });
+  }
+
   increment(product: Product) {
-    const selectedProduct = this.SelectedProducts.find((p) => p.original_product_id === product.id);
-    if (selectedProduct) {
-      selectedProduct.quantity += 1;
+    const selected = this.SelectedProducts.find((p) => p.original_product_id === product.id);
+    if (selected) {
+      selected.quantity += 1;
       return;
     }
-
     this.SelectedProducts.push({
       original_product_id: product.id,
       name: product.name,
@@ -68,25 +71,18 @@ export class ProductsComponent implements OnInit {
   }
 
   decrement(product: Product) {
-    const selectedProductIndex = this.SelectedProducts.findIndex((p) => p.original_product_id === product.id);
-    if (selectedProductIndex === -1) {
-      return;
-    }
-
-    const selectedProduct = this.SelectedProducts[selectedProductIndex];
-    if (selectedProduct.quantity === 1) {
-      this.SelectedProducts.splice(selectedProductIndex, 1);
+    const index = this.SelectedProducts.findIndex((p) => p.original_product_id === product.id);
+    if (index === -1) return;
+    const p = this.SelectedProducts[index];
+    if (p.quantity === 1) {
+      this.SelectedProducts.splice(index, 1);
     } else {
-      selectedProduct.quantity -= 1;
+      p.quantity -= 1;
     }
   }
 
   getQuantity(id: number): number {
-    const selectedProduct = this.SelectedProducts.find((p) => p.original_product_id === id);
-    if (!selectedProduct)
-      return 0;
-
-    return selectedProduct.quantity;
+    return this.SelectedProducts.find((p) => p.original_product_id === id)?.quantity ?? 0;
   }
 
   getPrixFinal(product: Product): number {
@@ -96,40 +92,78 @@ export class ProductsComponent implements OnInit {
     return product.price;
   }
 
+  get hasSelectedProducts(): boolean {
+    return this.SelectedProducts.length > 0;
+  }
+
   confirmer(product: Product) {
-    const selectedProduct = this.SelectedProducts.filter((p) => p.original_product_id === product.id);
-    const indexProduct = this.SelectedProducts.findIndex((p) => p.original_product_id === product.id);
-    if (selectedProduct.length !== 1 || indexProduct === -1)
-    {
-      alert('erreur');
-      return ;
-    }
+    const selected = this.SelectedProducts.find((p) => p.original_product_id === product.id);
+    if (!selected) return;
 
-    this.stockService.addStock(selectedProduct).subscribe({
+    const prixFinal = this.getPrixFinal(product);
+    this.modalMode = 'single';
+    this.modalTitre = 'Confirmer l\'ajout';
+    this.modalItems = [{
+      nom: product.name,
+      quantite: selected.quantity,
+      unite: product.unit,
+      prix: product.price,
+      remise: product.sale ? product.discount : 0,
+      total: Math.round(prixFinal * selected.quantity * 100) / 100
+    }];
+    this.pendingAction = () => this.executeConfirmer(product);
+    this.showModal = true;
+  }
+
+  private executeConfirmer(product: Product) {
+    const selected = this.SelectedProducts.filter((p) => p.original_product_id === product.id);
+    const index = this.SelectedProducts.findIndex((p) => p.original_product_id === product.id);
+    this.stockService.addStock(selected).subscribe({
       next: () => {
-        this.SelectedProducts.splice(indexProduct, 1);
-
-        alert(`${product.name} ajouté au stock !`);
+        this.SelectedProducts.splice(index, 1);
+        this.showModal = false;
       },
       error: (err) => console.error('Erreur ajout stock', err)
     });
   }
 
   confirmerTout() {
-    if (this.SelectedProducts.length < 1)
-    {
-      // erreur
-      return ;
-    }
-    
+    if (this.SelectedProducts.length < 1) return;
+
+    this.modalMode = 'recap';
+    this.modalTitre = 'Confirmer tout';
+    this.modalItems = this.SelectedProducts.map(p => {
+      const product = this.products.find(pr => pr.id === p.original_product_id);
+      const prixFinal = product ? this.getPrixFinal(product) : p.price;
+      return {
+        nom: p.name,
+        quantite: p.quantity,
+        unite: p.unit,
+        prix: Math.round(prixFinal * 100) / 100,
+        remise: p.discount,
+        total: Math.round(prixFinal * p.quantity * 100) / 100
+      };
+    });
+    this.pendingAction = () => this.executeConfirmerTout();
+    this.showModal = true;
+  }
+
+  private executeConfirmerTout() {
     this.stockService.addStock(this.SelectedProducts).subscribe({
       next: () => {
         this.SelectedProducts = [];
-        alert("Tous les produits ont été ajoutés au stock !");
-        // AJouter modale confirmation
+        this.showModal = false;
       },
       error: (err) => console.error('Erreur ajout produits au stock', err)
     });
+  }
 
+  onModalConfirm() {
+    if (this.pendingAction) this.pendingAction();
+  }
+
+  onModalCancel() {
+    this.showModal = false;
+    this.pendingAction = null;
   }
 }

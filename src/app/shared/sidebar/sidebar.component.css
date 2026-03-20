@@ -6,17 +6,14 @@
     left: 0;
     z-index: 99;
 }
-
 .sidebar-shell {
     width: var(--sidebar-width);
     height: 100%;
     transition: width 180ms ease;
 }
-
 .sidebar-shell.collapsed {
     width: 50px;
 }
-
 .sidebar-panel {
     width: 100%;
     max-width: 100%;
@@ -26,20 +23,17 @@
     color: var(--color-text-white);
     border-radius: 0;
 }
-
 .sidebar-content {
     height: 100%;
     padding: 10px;
     display: flex;
     flex-direction: column;
 }
-
 #sidebar-head {
     align-items: center;
     display: flex;
     gap: 15px;
 }
-
 #sidebar-logo-button {
     align-items: center;
     background: transparent;
@@ -49,18 +43,15 @@
     margin: 4px 0;
     padding: 0;
 }
-
 #sidebar-head h2 {
     font-size: 1.6667rem;
     font-weight: 700;
 }
-
 #sidebar-head h3 {
     font-size: 1rem;
     font-weight: 200;
     color: var(--color-grey-discreet);
 }
-
 #sidebar-nav {
     display: flex;
     flex-direction: column;
@@ -70,13 +61,11 @@
     list-style: none;
     font-size: 1.1667rem;
 }
-
 .sidebar-nav-title {
     color: var(--color-grey-discreet);
     line-height: 32px;
     padding-left: 10px;
 }
-
 .sidebar-nav-element,
 #sidebar-foot {
     display: flex;
@@ -88,11 +77,9 @@
     padding-left: 10px;
     cursor: pointer;
 }
-
 .sidebar-nav-element:hover, #sidebar-foot:hover {
     background-color: #004679;
 }
-
 .sidebar-nav-element:focus-visible,
 #sidebar-foot:focus-visible,
 #sidebar-logo-button:focus-visible {
@@ -100,18 +87,15 @@
     outline: 2px solid #ffffff;
     outline-offset: 2px;
 }
-
 .sidebar-nav-element.active {
-    background-color: #004679
+    background-color: #004679;
 }
-
 .nav-icon {
     width: 18px;
     height: 18px;
     border-radius: 100%;
     background-color: #fff;
 }
-
 .nav-material-icon {
     width: 18px;
     height: 18px;
@@ -119,26 +103,33 @@
     font-size: 1.5rem;
     color: #fff;
 }
-
 #sidebar-foot {
     margin-top: auto;
 }
-
 .hidden {
     display: none;
 }
-
 .sidebar-shell.collapsed #sidebar-head {
     justify-content: center;
 }
-
 .sidebar-nav-title,
 .sidebar-shell.collapsed .sidebar-nav-element,
 .sidebar-shell.collapsed #sidebar-foot {
     justify-content: center;
     padding-left: 0;
 }
-
 .sidebar-placeholder-content {
     display: none;
+}
+
+/* Override Angular Material theme */
+::ng-deep .sidebar-shell.mat-drawer-container {
+    background-color: var(--color-primary) !important;
+}
+::ng-deep .sidebar-panel.mat-drawer {
+    background-color: var(--color-primary) !important;
+    color: var(--color-text-white) !important;
+}
+::ng-deep .sidebar-shell .mat-drawer-backdrop {
+    display: none !important;
 }

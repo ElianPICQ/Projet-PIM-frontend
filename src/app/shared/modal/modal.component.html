@@ -1,0 +1,73 @@
+<div class="modal-overlay" (click)="cancel.emit()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <h2>{{ titre }}</h2>
+
+    <!-- Mode single -->
+    <ng-container *ngIf="mode === 'single' && items.length === 1">
+      <p class="modal-produit">{{ items[0].nom }}</p>
+
+      <div class="recap-ligne" *ngIf="items[0].operation">
+        <span>Opération</span>
+        <span [class]="'badge-op-' + items[0].operation!.toLowerCase()">{{ items[0].operation }}</span>
+      </div>
+      <div class="recap-ligne">
+        <span>Quantité</span>
+        <span>× {{ items[0].quantite }} {{ items[0].unite }}</span>
+      </div>
+      <ng-container *ngIf="showPrix">
+        <div class="recap-ligne">
+          <span>Prix</span>
+          <span>{{ items[0].prix }}€</span>
+        </div>
+        <div class="recap-ligne" *ngIf="items[0].remise && items[0].remise > 0">
+          <span>Remise</span>
+          <span class="badge-promo">{{ items[0].remise }}%</span>
+        </div>
+        <div class="recap-ligne total">
+          <span>Total</span>
+          <span>{{ items[0].total }}€</span>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- Mode recap -->
+    <ng-container *ngIf="mode === 'recap'">
+      <p class="modal-produit">{{ items.length }} produit(s)</p>
+
+      <table class="recap-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th *ngIf="showOperation">Opération</th>
+            <th>Qté</th>
+            <th *ngIf="showPrix">Prix unit.</th>
+            <th *ngIf="showPrix">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td>{{ item.nom }}</td>
+            <td *ngIf="showOperation">
+              <span [class]="'badge-op-' + item.operation!.toLowerCase()">{{ item.operation }}</span>
+            </td>
+            <td>× {{ item.quantite }} {{ item.unite }}</td>
+            <td *ngIf="showPrix">{{ item.prix }}€</td>
+            <td *ngIf="showPrix">{{ item.total }}€</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="recap-ligne total" *ngIf="showPrix">
+        <span>Total général</span>
+        <span>{{ grandTotal }}€</span>
+      </div>
+    </ng-container>
+
+    <div class="modal-actions">
+      <button class="btn-annuler" (click)="cancel.emit()">Annuler</button>
+      <button class="btn-confirmer-modal" (click)="confirm.emit()">Confirmer</button>
+    </div>
+
+  </div>
+</div>
