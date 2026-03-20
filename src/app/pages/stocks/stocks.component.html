@@ -44,7 +44,7 @@
     <tr *ngFor="let row of productsFiltered" [ngClass]="{'row-out-of-stock': row.quantity === 0, 'row-low-stock': row.quantity > 0 && row.quantity < 10}">
       <td class="default-table-cell">{{ categoryLabels[row.category] }}</td>
       <td class="default-table-cell">{{ row.name }}</td>
-      <td class="default-table-cell">{{ row.supplier }}</td>
+      <td class="default-table-cell"><span class="badge-fournisseur">{{ row.supplier }}</span></td>
       <td class="default-table-cell">{{ row.quantity }} <span *ngIf="displayMultiplySymbol(row.unit)">x</span> {{ row.unit }}</td>
       <td class="default-table-cell">{{ row.price }}</td>
       <td class="default-table-cell"><input type="number" [value]="row.sellPrice" name="sellPrice" (change)="row.sellPrice = +$any($event.target).value; updateFinalPrice(row)"></td>

@@ -114,3 +114,11 @@ p {
 .snackbar-error .mdc-snackbar__label {
   color: #ffffff !important;
 }
+
+.badge-fournisseur {
+  border: 1px solid #3F7CAF;
+  color: #3F7CAF;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 1rem;
+}
