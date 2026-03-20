@@ -8,6 +8,27 @@
     padding: 15px;
 }
 
+.table-tools {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-confirmer-tout {
+  background-color: #FC9100;
+  color: #FFFFFF;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-confirmer-tout:hover {
+  background-color: #e07f00;
+}
+
 .operations {
     display: flex;
     align-items: center;

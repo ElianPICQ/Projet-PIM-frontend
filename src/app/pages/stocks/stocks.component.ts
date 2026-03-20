@@ -173,7 +173,7 @@ export class StocksComponent {
     }
   }
 
-  confirmerTout(product: StockPageProduct) {
+  confirmerTout() {
     this.productsToAdd = this.productsToUpdate.filter((p) => p.operation === 'Achat');
     this.productsToRemove = this.productsToUpdate.filter(
       (p) => p.operation === 'Vente' || p.operation === 'Invendu'
