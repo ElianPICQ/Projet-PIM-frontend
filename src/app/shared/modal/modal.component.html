@@ -1,0 +1,67 @@
+<div class="modal-overlay" (click)="cancel.emit()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- Mode produit unique -->
+    <ng-container *ngIf="mode === 'single' && products.length === 1">
+      <h2>Confirmer l'ajout</h2>
+      <p class="modal-produit">{{ products[0].nom }}</p>
+
+      <div class="recap-ligne">
+        <span>Quantité</span>
+        <span>× {{ products[0].quantite }} {{ products[0].unite }}</span>
+      </div>
+      <div class="recap-ligne">
+        <span>Prix avant promo</span>
+        <span>{{ products[0].prixAvantPromo }}€</span>
+      </div>
+      <div class="recap-ligne" *ngIf="products[0].remise > 0">
+        <span>Remise</span>
+        <span class="badge-promo-oui">{{ products[0].remise }}%</span>
+      </div>
+      <div class="recap-ligne">
+        <span>Prix unitaire</span>
+        <span>{{ products[0].prixUnitaire }}€</span>
+      </div>
+      <div class="recap-ligne total">
+        <span>Total</span>
+        <span>{{ products[0].total }}€</span>
+      </div>
+    </ng-container>
+
+    <!-- Mode récap tout confirmer -->
+    <ng-container *ngIf="mode === 'recap'">
+      <h2>Récapitulatif</h2>
+      <p class="modal-produit">{{ products.length }} produit(s) à ajouter</p>
+
+      <table class="recap-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Qté</th>
+            <th>Prix unit.</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of products">
+            <td>{{ p.nom }}</td>
+            <td>×{{ p.quantite }} {{ p.unite }}</td>
+            <td>{{ p.prixUnitaire }}€</td>
+            <td>{{ p.total }}€</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="recap-ligne total">
+        <span>Total général</span>
+        <span>{{ grandTotal }}€</span>
+      </div>
+    </ng-container>
+
+    <div class="modal-actions">
+      <button class="btn-annuler" (click)="cancel.emit()">Annuler</button>
+      <button class="btn-confirmer" (click)="confirm.emit()">Confirmer</button>
+    </div>
+
+  </div>
+</div>

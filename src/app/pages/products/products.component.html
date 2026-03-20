@@ -6,7 +6,7 @@
       <h1>Produits</h1>
       <p>{{ products.length }} produit(s)</p>
     </div>
-    <button class="btn-confirmer-tout" (click)="confirmerTout()">✓ Confirmer tout</button>
+    <button class="btn-confirmer-tout" (click)="ouvrirModalRecap()" [disabled]="!hasSelectedProducts">✓ Confirmer tout</button>
   </div>
 
   <table>
@@ -45,9 +45,18 @@
           <button class="btn-quantity" (click)="increment(product)" [disabled]="!product.availability">+</button>
         </td>
         <td>
-          <button class="btn-confirmer" (click)="confirmer(product)" [disabled]="!product.availability || quantities[product.id] === 0">Confirmer</button>
+          <button class="btn-confirmer" (click)="ouvrirModalSingle(product)" [disabled]="!product.availability || quantities[product.id] === 0">Confirmer</button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<!-- Modal -->
+<app-modal
+  *ngIf="showModal"
+  [mode]="modalMode"
+  [products]="modalProducts"
+  (confirm)="onModalConfirm()"
+  (cancel)="onModalCancel()">
+</app-modal>
