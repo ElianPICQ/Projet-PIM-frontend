@@ -63,7 +63,7 @@
         </span>
       </td>
       <td>
-        <button class="btn-confirmer" (click)="confirmer(row)" [disabled]="!row.availability || quantities[row.id] === 0">Confirmer</button>
+        <button class="btn-confirmer" (click)="confirmer(row)" [disabled]="!row.availability || !getQuantity(row.id)">Confirmer</button>
       </td>
     </tr>
   </tbody>
