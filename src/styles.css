@@ -32,6 +32,10 @@ body {
     margin: 0;
 }
 
+p {
+    margin: 0;
+}
+
 .mat-icon {
     width: 100%;
     height: 100%;
@@ -55,12 +59,50 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 8px;
 
     width: 100%;
     max-width: 280px;
+}
+
+.shadow-container {
     padding: 15px;
-    gap: 8px;
 
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tables styles */
+.default-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FFFFFF;
+}
+
+.default-table-head {
+  text-align: left;
+  padding: 12px 16px;
+  color: #3F7CAF;
+  font-weight: 600;
+  border-bottom: 2px solid #003051;
+}
+
+.default-table-cell {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: #003051;
+}
+/**** End of table styles ****/
+
+/* Common styles */
+.number-of-x {
+  color: #3F7CAF;
+  margin-bottom: 20px;
+}
+
+.empty {
+  text-align: center;
+  color: #9e9e9e;
+  margin-top: 40px;
 }

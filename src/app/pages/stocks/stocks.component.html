@@ -1,50 +1,57 @@
 <app-header></app-header>
 <app-sidebar activePage="stocks"></app-sidebar>
 
-<table mat-table [dataSource]="stocks" class="mat-elevation-z2">
+<h2>Stocks</h2>
+<p class="number-of-x">{{ stocks.length }} stock(s)</p>
 
-  <ng-container matColumnDef="original_product_id">
-    <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let row">{{ row.original_product_id }}</td>
-  </ng-container>
+<p class="empty" *ngIf="stocks.length === 0">Aucun stock pour le moment.</p>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-  </ng-container>
+<table class="default-table" *ngIf="stocks.length > 0">
+  <thead>
+    <tr>
+      <th class="default-table-head">Category</th>
+      <th class="default-table-head">Name</th>
+      <th class="default-table-head">Supplier</th>
+      <th class="default-table-head">Quantity</th>
+      <th class="default-table-head">Price</th>
+      <th class="default-table-head">Discount</th>
+      <th class="default-table-head">Comments</th>
+      <th class="default-table-head">Operation</th>
+      <th class="default-table-head">Supprimer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of stocks">
+      <td class="default-table-cell">{{ row.category }}</td>
+      <td class="default-table-cell">{{ row.name }}</td>
+      <td class="default-table-cell">{{ row.supplier }}</td>
+      <td class="default-table-cell">{{ row.quantity }} {{ row.unit }}</td>
+      <td class="default-table-cell">{{ row.price }}</td>
+      <td class="default-table-cell">{{ row.discount }}</td>
+      <td class="default-table-cell">{{ row.comments }}</td>
+      <td class="default-table-cell">
+        <div class="operations">
+          <mat-form-field appearance="outline" class="operation-field" subscriptSizing="dynamic">
+            <mat-select
+              [value]="selectedOperations[row.id]"
+              (selectionChange)="onOperationChange(row, $event.value)"
+            >
+              <mat-option value="Achat">Achat</mat-option>
+              <mat-option value="Vente">Vente</mat-option>
+              <mat-option value="Invendu">Invendu</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-  <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef>Category</th>
-    <td mat-cell *matCellDef="let row">{{ row.category }}</td>
-  </ng-container>
+          <button class="btn-quantity" (click)="decrement(row)" [disabled]="!getQuantity(row.id)">−</button>
+          <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
+          <button class="btn-quantity" (click)="increment(row)">+</button>
 
-  <ng-container matColumnDef="quantity">
-    <th mat-header-cell *matHeaderCellDef>Quantity</th>
-    <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef>Price</th>
-    <td mat-cell *matCellDef="let row">{{ row.price }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="discount">
-    <th mat-header-cell *matHeaderCellDef>Discount</th>
-    <td mat-cell *matCellDef="let row">{{ row.discount }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="supplier">
-    <th mat-header-cell *matHeaderCellDef>Supplier</th>
-    <td mat-cell *matCellDef="let row">{{ row.supplier }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="comments">
-    <th mat-header-cell *matHeaderCellDef>Comments</th>
-    <td mat-cell *matCellDef="let row">{{ row.comments }}</td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+          <button class="btn-confirmer" (click)="confirmer(row)">Confirmer</button>
+        </div>
+      </td>
+      <td class="default-table-cell">
+        <button class="btn-delete" (click)="delete(row)" [disabled]="row.quantity">Supprimer du stock</button>
+      </td>
+    </tr>
+  </tbody>
 </table>
-

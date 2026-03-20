@@ -4,49 +4,52 @@
 <div class="page-header">
   <div>
     <h2>Produits</h2>
-    <p>{{ products.length }} produit(s)</p>
+    <p class="number-of-x">{{ products.length }} produit(s)</p>
   </div>
   
   <button class="btn-confirmer-tout" (click)="confirmerTout()">✓ Confirmer tout</button>
 </div>
 
-<table>
+
+<table class="default-table">
   <thead>
     <tr>
-      <th>Nom</th>
-      <th>Catégorie</th>
-      <th>Fournisseur</th>
-      <th>Commentaire</th>
-      <th>Prix actuel</th>
-      <th>Promotion</th>
-      <th>Statut</th>
-      <th>Quantité</th>
-      <th>Confirmer</th>
+      <th class="default-table-head">Catégorie</th>
+      <th class="default-table-head">Nom</th>
+      <th class="default-table-head">Fournisseur</th>
+      <th class="default-table-head">Commentaire</th>
+      <th class="default-table-head">Prix</th>
+      <th class="default-table-head">Promotion</th>
+      <th class="default-table-head">Statut</th>
+      <th class="default-table-head">Quantité</th>
+      <th class="default-table-head">Confirmer</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products">
-      <td>{{ product.name }}</td>
-      <td>{{ categoryLabels[product.category] }}</td>
-      <td><span class="badge-fournisseur">{{ product.owner }}</span></td>
-      <td><span class="comment">{{ product.comments }}</span></td>
-      <td>{{ product.price }}€</td>
+    <tr *ngFor="let row of products">
+      <td class="default-table-cell">{{ row.category }}</td>
+      <td class="default-table-cell">{{ row.name }}</td>
+      <td class="default-table-cell">{{ row.supplier }}</td>
+      <td class="default-table-cell">{{ row.comments }}</td>
+      <td class="default-table-cell">{{ row.price }}</td>
       <td>
-        <span *ngIf="product.sale" class="badge-promo-oui">{{ product.discount }}%</span>
-        <span *ngIf="!product.sale">—</span>
+        <span *ngIf="row.sale" class="badge-promo-oui">{{ row.discount }}%</span>
+        <span *ngIf="!row.sale">—</span>
       </td>
       <td>
-        <span [class]="product.availability ? 'badge-stock' : 'badge-rupture'">
-          {{ product.availability ? 'En stock' : 'Rupture' }}
+        <span [class]="row.availability ? 'badge-stock' : 'badge-rupture'">
+          {{ row.availability ? 'En stock' : 'Rupture' }}
         </span>
       </td>
       <td class="actions">
-        <button class="btn-quantity" (click)="decrement(product)" [disabled]="!product.availability">−</button>
-        <span class="quantity">×{{ getQuantity(product.id) }} | {{ product.unit }}</span>
-        <button class="btn-quantity" (click)="increment(product)" [disabled]="!product.availability">+</button>
+        <span>
+        <button class="btn-quantity" (click)="decrement(row)" [disabled]="!row.availability">−</button>
+        <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
+        <button class="btn-quantity" (click)="increment(row)" [disabled]="!row.availability">+</button>
+        </span>
       </td>
       <td>
-        <button class="btn-confirmer" (click)="confirmer(product)" [disabled]="!product.availability || quantities[product.id] === 0">Confirmer</button>
+        <button class="btn-confirmer" (click)="confirmer(row)" [disabled]="!row.availability || quantities[row.id] === 0">Confirmer</button>
       </td>
     </tr>
   </tbody>

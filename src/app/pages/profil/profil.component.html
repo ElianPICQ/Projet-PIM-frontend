@@ -3,7 +3,7 @@
 
 <h2>Mon profil</h2>
 
-<div class="default-container">
+<div class="default-container shadow-container">
     <app-icon-primary icon="person" state="secondary"></app-icon-primary>
     <div id="profil-info">
         <span id="username">{{ username }}</span>
@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="default-container change-password">
+<div class="default-container shadow-container change-password">
     <h3><app-icon-primary icon="lock" state="tertiary"></app-icon-primary>Modifier le mot de passe</h3>
 
     <form (submit)="$event.preventDefault(); changePassword(oldPasswordField.value, newPasswordField.value, confirmPasswordField.value)">

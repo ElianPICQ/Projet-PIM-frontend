@@ -1,11 +1,11 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ProductService, Product } from 'src/app/core/services/product.service';
+import { ProductService } from 'src/app/core/services/product.service';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 import { SidebarStateService } from 'src/app/core/services/sidebar-state.service';
-import { StockProduct } from 'src/app/core/interfaces/productsInterface';
+import { Product, ProductPageProduct } from 'src/app/core/interfaces/productsInterface';
 import { StockService } from 'src/app/core/services/stock.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { StockService } from 'src/app/core/services/stock.service';
 export class ProductsComponent implements OnInit {
 
   products: Product[] = [];
-  SelectedProducts: StockProduct[] = [];
+  SelectedProducts: ProductPageProduct[] = [];
 
   categoryLabels: { [key: number]: string } = {
     0: 'Poissons',
@@ -59,10 +59,11 @@ export class ProductsComponent implements OnInit {
       name: product.name,
       category: product.category,
       quantity: 1,
+      unit: product.unit,
       price: product.price,
       discount: product.sale ? product.discount : 0,
       comments: product.comments,
-      supplier: product.owner
+      supplier: product.supplier
     });
   }
 
@@ -108,9 +109,9 @@ export class ProductsComponent implements OnInit {
       next: () => {
         this.SelectedProducts.splice(indexProduct, 1);
 
-        alert(`${product.name} ajouté à l'historique !`);
+        alert(`${product.name} ajouté au stock !`);
       },
-      error: (err) => console.error('Erreur ajout transaction', err)
+      error: (err) => console.error('Erreur ajout stock', err)
     });
   }
 
@@ -124,7 +125,7 @@ export class ProductsComponent implements OnInit {
     this.stockService.addStock(this.SelectedProducts).subscribe({
       next: () => {
         this.SelectedProducts = [];
-        alert("on est bon")
+        alert("Tous les produits ont été ajoutés au stock !");
         // AJouter modale confirmation
       },
       error: (err) => console.error('Erreur ajout produits au stock', err)

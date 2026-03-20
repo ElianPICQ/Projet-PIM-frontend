@@ -1,4 +1,51 @@
 <app-header></app-header>
 <app-sidebar activePage="dashboard"></app-sidebar>
 
-<p>dashboard works!</p>
+<h2>Dashboard</h2>
+<p class="number-of-x">Vue d'ensemble</p>
+
+@if (dashboardData) {
+<div class="kpi-boxes">
+  <div class="kpi-box shadow-container">
+    <div>
+        <h3>Chiffre d'affaires</h3>
+        <p class="kpi-value">€{{ dashboardData.total_ventes }}</p>
+    </div>
+    <app-icon-primary icon="trending_up"></app-icon-primary>
+  </div>
+
+  <div class="kpi-box shadow-container">
+    <div>
+        <h3>Produits en stock</h3>
+        <p class="kpi-value">{{ getProductInStock() }}</p>
+        <p class="total-stock">{{ dashboardData.total_products }} total</p>
+    </div>
+    <app-icon-primary icon="warehouse"></app-icon-primary>
+  </div>
+
+  <div class="kpi-box shadow-container">
+    <div>
+        <h3>Stocks faibles</h3>
+        <p class="kpi-value">{{ dashboardData.low_stock }}</p>
+        <p class="warning-text-small">Vigilence requise</p>
+    </div>
+    <app-icon-primary icon="warning"></app-icon-primary>
+  </div>
+
+  <div class="kpi-box shadow-container">
+    <div>
+        <h3>Ruptures de stock</h3>
+        <p class="kpi-value">{{ dashboardData.out_of_stock }}</p>
+        <p class="error-text-small">Attention requise</p>
+    </div>
+    <app-icon-primary icon="error" state="error"></app-icon-primary>
+  </div>
+</div>
+
+<div class="chart-section shadow-container">
+  <h3>Statistiques de ventes</h3>
+  <div id="chart-container">
+    <canvas #salesChart></canvas>
+  </div>
+</div>
+}

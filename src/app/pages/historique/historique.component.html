@@ -3,38 +3,35 @@
 
 <div class="page-content">
   <h2>Historique</h2>
-  <p>{{ transactions.length }} transaction(s)</p>
+  <p class="number-of-x">{{ transactions.length }} transaction(s)</p>
 
   <p class="empty" *ngIf="transactions.length === 0">Aucune transaction pour le moment.</p>
 
-  <table *ngIf="transactions.length > 0">
+  <table class="default-table" *ngIf="transactions.length > 0">
     <thead>
       <tr>
-        <th>Nom</th>
-        <th>Date de mouvement</th>
-        <th>Type</th>
-        <th>Catégorie</th>
-        <th>Quantité</th>
-        <th>Prix avant promo</th>
-        <th>Remise</th>
-        <th>Prix unitaire</th>
-        <th>Total</th>
+        <th class="default-table-head">Date</th>
+        <th class="default-table-head">Type</th>
+        <th class="default-table-head">Category</th>
+        <th class="default-table-head">Name</th>
+        <th class="default-table-head">Supplier</th>
+        <th class="default-table-head">Quantity</th>
+        <th class="default-table-head">Price</th>
+        <th class="default-table-head">Discount</th>
+        <th class="default-table-head">Comments</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let t of transactions">
-        <td>{{ t.nom }}</td>
-        <td>{{ t.date }}</td>
-        <td><span class="badge-achat">{{ t.type_mouvement }}</span></td>
-        <td>{{ t.categorie }}</td>
-        <td>{{ t.quantite }}</td>
-        <td>{{ t.prix_avant_promo }}€</td>
-        <td>
-          <span *ngIf="t.remise > 0" class="badge-promo-oui">{{ t.remise }}%</span>
-          <span *ngIf="t.remise === 0">—</span>
-        </td>
-        <td>{{ t.prix_unitaire }}€</td>
-        <td class="total">{{ t.total }}€</td>
+      <tr *ngFor="let row of transactions" [ngClass]="{'row-achat': row.type_mouvement === 'Achat', 'row-vente': row.type_mouvement === 'Vente', 'row-invendu': row.type_mouvement === 'Invendu'}">
+        <td class="default-table-cell">{{ row.date }}</td>
+        <td class="default-table-cell">{{ row.type_mouvement }}</td>
+        <td class="default-table-cell">{{ row.category }}</td>
+        <td class="default-table-cell">{{ row.name }}</td>
+        <td class="default-table-cell">{{ row.supplier }}</td>
+        <td class="default-table-cell">{{ row.quantity }} {{ row.unit }}</td>
+        <td class="default-table-cell">{{ row.price }}</td>
+        <td class="default-table-cell">{{ row.discount }}</td>
+        <td class="default-table-cell">{{ row.comments }}</td>
       </tr>
     </tbody>
   </table>

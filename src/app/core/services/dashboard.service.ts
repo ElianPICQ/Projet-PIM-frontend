@@ -3,17 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from '../interfaces/productsInterface';
+import { DashboardData } from '../interfaces/dashboardInterface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class DashboardService {
 
-  private readonly productsUrl = environment.API_URL + 'distant/products/';
+  private readonly dashboardUrl = environment.API_URL + 'dashboard/';
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl);
+  getDashboardData(): Observable<DashboardData> {
+    return this.http.get<DashboardData>(this.dashboardUrl);
   }
 }

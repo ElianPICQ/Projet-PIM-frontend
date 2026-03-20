@@ -86,6 +86,7 @@ tr:hover {
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 1rem;
+  white-space: nowrap;
 }
 
 .badge-rupture {
@@ -98,6 +99,11 @@ tr:hover {
 
 /* Actions */
 .actions {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.actions span {
   display: flex;
   align-items: center;
   gap: 8px;

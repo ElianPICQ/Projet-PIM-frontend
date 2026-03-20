@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { StockProduct } from '../interfaces/productsInterface';
+import { StockPageProduct,ProductPageProduct } from '../interfaces/productsInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +13,19 @@ export class StockService {
 
   constructor(private http: HttpClient) {}
 
-  getStock(): Observable<StockProduct[]> {
-    return this.http.get<StockProduct[]>(this.StockUrl);
+  getStock(): Observable<StockPageProduct[]> {
+    return this.http.get<StockPageProduct[]>(this.StockUrl);
   }
 
-  addStock(products: StockProduct[]): Observable<StockProduct[]> {
-    return this.http.post<StockProduct[]>(this.StockUrl + "add/", { products })
+  addStock(products: ProductPageProduct[]): Observable<ProductPageProduct[]> {
+    return this.http.post<ProductPageProduct[]>(this.StockUrl + "add/", { products })
   }
 
-  removeStock(products: StockProduct[]): Observable<StockProduct[]> {
-    return this.http.post<StockProduct[]>(this.StockUrl + "remove", { products })
+  removeStock(products: ProductPageProduct[]): Observable<StockPageProduct[]> {
+    return this.http.post<StockPageProduct[]>(this.StockUrl + "remove/", { products })
+  }
+
+  deleteStock(id: number): Observable<StockPageProduct> {
+    return this.http.post<StockPageProduct>(this.StockUrl + "delete/", { id });
   }
 }

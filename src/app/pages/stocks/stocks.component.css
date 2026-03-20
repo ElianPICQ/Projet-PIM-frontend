@@ -7,3 +7,78 @@
     margin-top: 30px;
     padding: 15px;
 }
+
+.operations {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.operations .quantity {
+    white-space: nowrap;
+}
+
+.operation-field {
+    width: 100px;
+}
+
+.operation-field ::ng-deep .mat-mdc-text-field-wrapper {
+    height: 35px;
+    padding: 0 8px;
+}
+
+.operation-field ::ng-deep .mat-mdc-form-field-infix {
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: unset;
+    display: flex;
+    align-items: center;
+    height: 35px;
+}
+
+.operation-field ::ng-deep .mat-mdc-select-trigger {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.btn-quantity {
+  background-color: #FFFFFF;
+  border: 1px solid #003051;
+  color: #003051;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 1.3333rem;
+  cursor: pointer;
+}
+
+.btn-quantity:hover {
+  background-color: #f0f5fa;
+}
+
+.btn-confirmer {
+  background-color: #FC9100;
+  color: #FFFFFF;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 400;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background-color: #f00;
+  color: #FFFFFF;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 400;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-delete:disabled {
+  background-color: #ff000033;
+}
