@@ -22,7 +22,7 @@ export interface ProductPageProduct {
   price: number;
   discount: number;
   comments: string;
-  supplier: string;
+  owner: string;
 }
 
 // Product in the stock
@@ -36,7 +36,7 @@ export interface StockPageProduct {
   price: number;
   discount: number;
   comments: string;
-  supplier: string;
+  owner: string;
 }
 
 export interface StockProductToUpdate {
@@ -49,6 +49,6 @@ export interface StockProductToUpdate {
   price: number;
   discount: number;
   comments: string;
-  supplier: string;
+  owner: string;
   operation: 'Achat' | 'Vente' | 'Invendu';
 }

@@ -63,7 +63,7 @@ export class ProductsComponent implements OnInit {
       price: product.price,
       discount: product.sale ? product.discount : 0,
       comments: product.comments,
-      supplier: product.owner
+      owner: product.owner
     });
   }
 

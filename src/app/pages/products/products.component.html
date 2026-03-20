@@ -27,9 +27,9 @@
   </thead>
   <tbody>
     <tr *ngFor="let row of products">
-      <td class="default-table-cell">{{ row.category }}</td>
+      <td class="default-table-cell">{{ categoryLabels[row.category] }}</td>
       <td class="default-table-cell">{{ row.name }}</td>
-      <td class="default-table-cell">{{ row.owner }}</td>
+      <td class="default-table-cell"><span class="badge-fournisseur">{{ row.owner }}</span></td>
       <td class="default-table-cell">{{ row.comments }}</td>
       <td class="default-table-cell">{{ row.price }}</td>
       <td>
