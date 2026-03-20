@@ -27,18 +27,22 @@ h3 {
     justify-content: start;
 }
 
+.user-infos {
+    gap: 20px;
+}
+
 #profil-info {
     display: flex;
     flex-direction: column;
 }
 
 #username {
-    font-size: 1.1rem;
+    font-size: 2rem;
     font-weight: 600;
 }
 
 #email {
-    font-size: 0.9rem;
+    font-size: 1.3rem;
     font-weight: 300;
 }
 
@@ -51,6 +55,10 @@ h3 {
     flex-direction: column;
     align-items: start;
     gap: 15px;
+}
+
+.change-password h3 {
+    font-size: 1.7rem;
 }
 
 .change-password app-icon-primary {

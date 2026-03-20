@@ -6,6 +6,21 @@
 
 <p class="empty" *ngIf="stocks.length === 0">Aucun stock pour le moment.</p>
 
+<div class="filters">
+  <mat-form-field appearance="outline" class="operation-field" subscriptSizing="dynamic">
+    <mat-select
+      class="select-input"
+      [value]="filterCategory"
+      (selectionChange)="onFilterCategoryChange($event.value)"
+    >
+      <mat-option [value]="-1">Tous</mat-option>
+      <mat-option [value]="0">Poissons</mat-option>
+      <mat-option [value]="1">Coquillages</mat-option>
+      <mat-option [value]="2">Crustacés</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 <table class="default-table" *ngIf="stocks.length > 0">
   <thead>
     <tr>
@@ -21,11 +36,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of stocks" [ngClass]="{'row-out-of-stock': row.quantity === 0, 'row-low-stock': row.quantity > 0 && row.quantity < 10}">
-      <td class="default-table-cell">{{ row.category }}</td>
+    <tr *ngFor="let row of productsFiltered" [ngClass]="{'row-out-of-stock': row.quantity === 0, 'row-low-stock': row.quantity > 0 && row.quantity < 10}">
+      <td class="default-table-cell">{{ categoryLabels[row.category] }}</td>
       <td class="default-table-cell">{{ row.name }}</td>
       <td class="default-table-cell">{{ row.supplier }}</td>
-      <td class="default-table-cell">{{ row.quantity }} {{ row.unit }}</td>
+      <td class="default-table-cell">{{ row.quantity }} <span *ngIf="displayMultiplySymbol(row.unit)">x</span> {{ row.unit }}</td>
       <td class="default-table-cell">{{ row.price }}</td>
       <td class="default-table-cell">{{ row.discount }}</td>
       <td class="default-table-cell">{{ row.comments }}</td>
@@ -42,9 +57,11 @@
             </mat-select>
           </mat-form-field>
 
-          <button class="btn-quantity" (click)="decrement(row)" [disabled]="!getQuantity(row.id)">−</button>
-          <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
-          <button class="btn-quantity" (click)="increment(row)">+</button>
+          <span class="operations-btns">
+            <button class="btn-quantity" (click)="decrement(row)" [disabled]="!getQuantity(row.id)">−</button>
+            <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
+            <button class="btn-quantity" (click)="increment(row)">+</button>
+          </span>
 
           <button class="btn-confirmer" (click)="confirmer(row)">Confirmer</button>
         </div>

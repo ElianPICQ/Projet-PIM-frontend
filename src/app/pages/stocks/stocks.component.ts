@@ -18,9 +18,19 @@ import { CommonModule } from '@angular/common';
 })
 export class StocksComponent {
   stocks: StockPageProduct[] = [];
+  productsFiltered: StockPageProduct[] = [];
   selectedOperations: Record<number, 'Achat' | 'Vente' | 'Invendu'> = {};
   displayedColumns: string[] = ['category', 'name', 'supplier', 'quantity', 'price', 'discount', 'comments', 'operation', 'delete'];
-  
+  private basicUnits: string[] = ['kg', 'pièce', 'Dz'];
+
+  filterCategory: -1 | 0 | 1 | 2 = -1;
+
+  categoryLabels: { [key: number]: string } = {
+    0: 'Poissons',
+    1: 'Coquillages',
+    2: 'Crustacés'
+  };
+
   productsToUpdate: StockProductToUpdate[] = [];
   productsToAdd: StockProductToUpdate[] = [];
   productsToRemove: StockProductToUpdate[] = [];
@@ -43,6 +53,7 @@ export class StocksComponent {
     this.stockService.getStock().subscribe({
       next: (data) => {
         this.stocks = data;
+        this.onFilterCategoryChange(this.filterCategory);
         this.stocks.forEach((item) => {
           if (!this.selectedOperations[item.id]) {
             this.selectedOperations[item.id] = 'Achat';
@@ -52,6 +63,19 @@ export class StocksComponent {
       },
       error: (err) => console.error('Erreur chargement stocks', err)
     });
+  }
+
+  onFilterCategoryChange(category: number) {
+    if (category === -1) {
+      this.productsFiltered = this.stocks;
+    } else {
+      this.productsFiltered = this.stocks.filter(p => +p.category === category);
+    }
+    console.log(this.productsFiltered)
+  }
+
+  displayMultiplySymbol(unit: string) {
+    return !this.basicUnits.includes(unit);
   }
 
   onOperationChange(product: StockPageProduct, operation: StockProductToUpdate['operation']) {

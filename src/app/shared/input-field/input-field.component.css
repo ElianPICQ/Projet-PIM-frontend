@@ -3,7 +3,7 @@
 	flex-direction: column;
 
 	width: 100%;
-	font-size: 0.9rem;
+	font-size: 1.2rem;
 }
 
 .form-input label {
@@ -13,7 +13,7 @@
 .form-input input {
 	padding: 3px 5px;
 	margin-bottom: 15px;
-	font-size: 0.8333rem;
+	font-size: 1.1rem;;
 	border: 1px solid var(--color-grey-discreet);
 	border-radius: 5px;
 }

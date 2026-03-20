@@ -10,6 +10,20 @@
   <button class="btn-confirmer-tout" (click)="confirmerTout()">✓ Confirmer tout</button>
 </div>
 
+<div class="filters">
+  <mat-form-field appearance="outline" class="operation-field" subscriptSizing="dynamic">
+    <mat-select
+      class="select-input"
+      [value]="filterCategory"
+      (selectionChange)="onFilterCategoryChange($event.value)"
+    >
+      <mat-option [value]="-1">Tous</mat-option>
+      <mat-option [value]="0">Poissons</mat-option>
+      <mat-option [value]="1">Coquillages</mat-option>
+      <mat-option [value]="2">Crustacés</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 
 <table class="default-table">
   <thead>
@@ -26,7 +40,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of products">
+    <tr *ngFor="let row of productsFiltered">
       <td class="default-table-cell">{{ categoryLabels[row.category] }}</td>
       <td class="default-table-cell">{{ row.name }}</td>
       <td class="default-table-cell"><span class="badge-fournisseur">{{ row.supplier }}</span></td>
@@ -42,10 +56,10 @@
         </span>
       </td>
       <td class="actions">
-        <span>
-        <button class="btn-quantity" (click)="decrement(row)" [disabled]="!row.availability">−</button>
-        <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
-        <button class="btn-quantity" (click)="increment(row)" [disabled]="!row.availability">+</button>
+        <span class="operations-btns">
+          <button class="btn-quantity" (click)="decrement(row)" [disabled]="!row.availability">−</button>
+          <span class="quantity">×{{ getQuantity(row.id) }} | {{ row.unit }}</span>
+          <button class="btn-quantity" (click)="increment(row)" [disabled]="!row.availability">+</button>
         </span>
       </td>
       <td>

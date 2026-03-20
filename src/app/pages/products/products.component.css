@@ -28,6 +28,12 @@ p {
   margin-bottom: 20px;
 }
 
+/* Filters */
+.filters ::ng-deep .mat-mdc-select-value {
+    color: var(--color-text-darkblue);
+}
+/***********/
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -143,6 +149,12 @@ tr:hover {
 
 .btn-ajouter:hover {
   background-color: #e07f00;
+}
+
+.operations-btns {
+    display: flex;
+    width: 160px;
+    justify-content: space-between;
 }
 
 /* Modal */

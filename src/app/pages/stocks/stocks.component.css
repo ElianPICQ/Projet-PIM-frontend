@@ -11,15 +11,16 @@
 .operations {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 5px;
 }
 
 .row-out-of-stock td {
-    background-color: #fdecea;
+    background-color: #ff190088;
 }
 
 .row-low-stock td {
-    background-color: #fff3e0;
+    background-color: #ff9d0088;
 }
 
 .operations .quantity {
@@ -28,6 +29,8 @@
 
 .operation-field {
     width: 100px;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 .operation-field ::ng-deep .mat-mdc-text-field-wrapper {
@@ -48,6 +51,16 @@
     height: 100%;
     display: flex;
     align-items: center;
+}
+
+.operation-field ::ng-deep .mat-mdc-select-value {
+    color: var(--color-text-darkblue);
+}
+
+.operations-btns {
+    display: flex;
+    width: 160px;
+    justify-content: space-between;
 }
 
 .btn-quantity {
@@ -89,4 +102,5 @@
 
 .btn-delete:disabled {
   background-color: #ff000033;
+  cursor: not-allowed;
 }

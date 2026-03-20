@@ -7,17 +7,22 @@ import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 import { SidebarStateService } from 'src/app/core/services/sidebar-state.service';
 import { Product, ProductPageProduct } from 'src/app/core/interfaces/productsInterface';
 import { StockService } from 'src/app/core/services/stock.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-products',
-  imports: [HeaderComponent, SidebarComponent, CommonModule, FormsModule],
+  imports: [HeaderComponent, SidebarComponent, CommonModule, FormsModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
 
   products: Product[] = [];
+  productsFiltered: Product[] = [];
   SelectedProducts: ProductPageProduct[] = [];
+  
+  filterCategory: -1 | 0 | 1 | 2 = -1;
 
   categoryLabels: { [key: number]: string } = {
     0: 'Poissons',
@@ -37,6 +42,7 @@ export class ProductsComponent implements OnInit {
     this.productService.getProducts().subscribe({
       next: (data) => {
         this.products = data;
+        this.onFilterCategoryChange(this.filterCategory);
       },
       error: (err) => console.error('Erreur chargement produits', err)
     });
@@ -45,6 +51,15 @@ export class ProductsComponent implements OnInit {
   @HostBinding('style.margin-left.px')
   get hostMarginLeft(): number {
     return this.sidebarStateService.isCollapsed ? 50 : 180;
+  }
+
+  onFilterCategoryChange(category: number) {
+    if (category === -1) {
+      this.productsFiltered = this.products;
+    } else {
+      this.productsFiltered = this.products.filter(p => p.category === category);
+    }
+    console.log(this.productsFiltered)
   }
 
   increment(product: Product) {
