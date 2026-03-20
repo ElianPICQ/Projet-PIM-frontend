@@ -9,7 +9,7 @@ export interface Product {
   sale: boolean;
   discount: number;
   comments: string;
-  owner: string;
+  supplier: string;
 }
 
 // Product selected by the user to be added to the stock
@@ -22,7 +22,7 @@ export interface ProductPageProduct {
   price: number;
   discount: number;
   comments: string;
-  owner: string;
+  supplier: string;
 }
 
 // Product in the stock
@@ -36,7 +36,7 @@ export interface StockPageProduct {
   price: number;
   discount: number;
   comments: string;
-  owner: string;
+  supplier: string;
 }
 
 export interface StockProductToUpdate {
@@ -49,6 +49,6 @@ export interface StockProductToUpdate {
   price: number;
   discount: number;
   comments: string;
-  owner: string;
+  supplier: string;
   operation: 'Achat' | 'Vente' | 'Invendu';
 }

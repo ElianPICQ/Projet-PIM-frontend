@@ -24,7 +24,7 @@
     <tr *ngFor="let row of stocks" [ngClass]="{'row-out-of-stock': row.quantity === 0, 'row-low-stock': row.quantity > 0 && row.quantity < 10}">
       <td class="default-table-cell">{{ row.category }}</td>
       <td class="default-table-cell">{{ row.name }}</td>
-      <td class="default-table-cell">{{ row.owner }}</td>
+      <td class="default-table-cell">{{ row.supplier }}</td>
       <td class="default-table-cell">{{ row.quantity }} {{ row.unit }}</td>
       <td class="default-table-cell">{{ row.price }}</td>
       <td class="default-table-cell">{{ row.discount }}</td>

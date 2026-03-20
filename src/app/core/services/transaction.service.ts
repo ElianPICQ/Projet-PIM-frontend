@@ -14,7 +14,7 @@ export interface Transaction {
   price: number;
   discount: number;
   comments: string;
-  owner: string;
+  supplier: string;
 }
 
 @Injectable({

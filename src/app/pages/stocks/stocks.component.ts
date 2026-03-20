@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 export class StocksComponent {
   stocks: StockPageProduct[] = [];
   selectedOperations: Record<number, 'Achat' | 'Vente' | 'Invendu'> = {};
-  displayedColumns: string[] = ['category', 'name', 'owner', 'quantity', 'price', 'discount', 'comments', 'operation', 'delete'];
+  displayedColumns: string[] = ['category', 'name', 'supplier', 'quantity', 'price', 'discount', 'comments', 'operation', 'delete'];
   
   productsToUpdate: StockProductToUpdate[] = [];
   productsToAdd: StockProductToUpdate[] = [];
@@ -96,7 +96,7 @@ export class StocksComponent {
       price: product.price,
       discount: product.discount,
       comments: product.comments,
-      owner: product.owner,
+      supplier: product.supplier,
       operation: this.selectedOperations[product.id]
     });
   }
