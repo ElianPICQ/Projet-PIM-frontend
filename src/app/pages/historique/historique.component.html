@@ -24,7 +24,7 @@
     <tr *ngFor="let row of transactions" [ngClass]="{'row-achat': row.type_mouvement === 'Achat', 'row-vente': row.type_mouvement === 'Vente', 'row-invendu': row.type_mouvement === 'Invendu'}">
       <td class="default-table-cell">{{ row.date }}</td>
       <td class="default-table-cell">{{ row.type_mouvement }}</td>
-      <td class="default-table-cell">{{ row.category }}</td>
+      <td class="default-table-cell">{{ categoryLabels[row.category] }}</td>
       <td class="default-table-cell">{{ row.name }}</td>
       <td class="default-table-cell">{{ row.supplier }}</td>
       <td class="default-table-cell">{{ row.quantity }} {{ row.unit }}</td>
