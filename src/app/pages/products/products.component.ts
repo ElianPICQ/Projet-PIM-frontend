@@ -76,7 +76,7 @@ export class ProductsComponent implements OnInit {
       quantity: 1,
       unit: product.unit,
       price: product.price,
-      discount: product.sale ? product.discount : 0,
+      discount: 0,
       comments: product.comments,
       supplier: product.supplier
     });

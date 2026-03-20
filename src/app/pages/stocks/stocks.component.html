@@ -33,7 +33,10 @@
       <th class="default-table-head">Fournisseur</th>
       <th class="default-table-head">Quantité</th>
       <th class="default-table-head">Prix Achat</th>
+      <th class="default-table-head">Prix Vente Unité</th>
       <th class="default-table-head">Réduction</th>
+      <th class="default-table-head">Prix Final</th>
+      <th class="default-table-head">Marge</th>
       <th class="default-table-head">Infos</th>
       <th class="default-table-head">Operation</th>
       <th class="default-table-head">Supprimer</th>
@@ -46,7 +49,10 @@
       <td class="default-table-cell">{{ row.supplier }}</td>
       <td class="default-table-cell">{{ row.quantity }} <span *ngIf="displayMultiplySymbol(row.unit)">x</span> {{ row.unit }}</td>
       <td class="default-table-cell">{{ row.price }}</td>
-      <td class="default-table-cell">{{ row.discount }}</td>
+      <td class="default-table-cell"><input type="number" [value]="row.sellPrice" name="sellPrice" (change)="row.sellPrice = +$any($event.target).value; updateFinalPrice(row)"></td>
+      <td class="default-table-cell"><input type="number" step="0.01" [value]="row.discount" name="discount" (change)="row.discount = +$any($event.target).value; updateFinalPrice(row)"></td>
+      <td class="default-table-cell">{{ row.finalSellPrice }}</td>
+      <td class="default-table-cell"><span class="margin" [ngClass]="((row.finalSellPrice - row.price) / row.price) * 100 > 0 ? 'positive' : 'negative'">{{ ((row.finalSellPrice - row.price) / row.price) * 100 }} %</span></td>
       <td class="default-table-cell">{{ row.comments }}</td>
       <td class="default-table-cell">
         <div class="operations">

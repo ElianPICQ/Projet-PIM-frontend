@@ -29,6 +29,16 @@
   background-color: #e07f00;
 }
 
+.margin.positive {
+    font-size: 1rem;
+    color: green;
+}
+
+.margin.negative {
+    font-size: 1rem;
+    color: red;
+}
+
 .operations {
     display: flex;
     align-items: center;

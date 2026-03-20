@@ -20,8 +20,11 @@ export class StocksComponent {
   stocks: StockPageProduct[] = [];
   productsFiltered: StockPageProduct[] = [];
   selectedOperations: Record<number, 'Achat' | 'Vente' | 'Invendu'> = {};
-  displayedColumns: string[] = ['category', 'name', 'supplier', 'quantity', 'price', 'discount', 'comments', 'operation', 'delete'];
+  displayedColumns: string[] = ['category', 'name', 'supplier', 'quantity', 'price', 'sellPrice', 'discount', 'finalSellPrice', 'margin', 'comments', 'operation', 'delete'];
   private basicUnits: string[] = ['kg', 'pièce', 'Dz'];
+
+  sellPrice: number = 0;
+  finalSellPrice: number = 0;
 
   filterCategory: -1 | 0 | 1 | 2 = -1;
 
@@ -53,6 +56,10 @@ export class StocksComponent {
     this.stockService.getStock().subscribe({
       next: (data) => {
         this.stocks = data;
+        this.stocks.forEach(stock => {
+          stock.sellPrice = stock.price;
+          stock.finalSellPrice = stock.price;
+        });
         this.onFilterCategoryChange(this.filterCategory);
         this.stocks.forEach((item) => {
           if (!this.selectedOperations[item.id]) {
@@ -88,6 +95,10 @@ export class StocksComponent {
 
     selectedProduct.operation = operation;
   }
+
+  updateFinalPrice(product: StockPageProduct) {
+    product.finalSellPrice = Math.round(product.sellPrice * (1 - product.discount) * 100) / 100;
+  }
   
   decrement(product: StockPageProduct) {
     const selectedProductIndex = this.productsToUpdate.findIndex((p) => p.id === product.id);
@@ -117,7 +128,7 @@ export class StocksComponent {
       category: product.category,
       quantity: 1,
       unit: product.unit,
-      price: product.price,
+      price: this.selectedOperations[product.id] === 'Vente' ? product.finalSellPrice : product.price,
       discount: product.discount,
       comments: product.comments,
       supplier: product.supplier,
