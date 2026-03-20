@@ -106,3 +106,11 @@ p {
   color: #9e9e9e;
   margin-top: 40px;
 }
+
+.snackbar-error .mdc-snackbar__surface {
+  background-color: #d32f2f !important;
+}
+
+.snackbar-error .mdc-snackbar__label {
+  color: #ffffff !important;
+}
